@@ -19,13 +19,19 @@
                         <!--begin::Breadcrumb-->
                         <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                             <li class="breadcrumb-item text-muted">
-                                <a href="{{route('dashboard.index')}}" class="text-muted">{{__('dashboard.Dashboard')}}</a>
+                                @can('dashboard.index')
+                                    <a href="{{route('dashboard.index')}}" class="text-muted">{{__('dashboard.Dashboard')}}</a>
+                                @endcan
                             </li>
                             <li class="breadcrumb-item text-muted">
+                                @can('packages.index')
                                 <a href="{{route('packages.index')}}" class="text-muted">{{__('dashboard.packages')}}</a>
+                                @endcan
                             </li>
                             <li class="breadcrumb-item text-muted">
+                                @can('packages.create')
                                 <a href="" class="text-muted">{{__('dashboard.Create package')}}</a>
+                                @endcan
                             </li>
                         </ul>
                         <!--end::Breadcrumb-->
@@ -89,7 +95,18 @@
 
                                         </div>
                                     </div>
-
+                                    <div class="form-group row">
+                                        <label
+                                            class="col-xl-3 col-lg-3 col-form-label">{{__('dashboard.Select provider')}}</label>
+                                        <div class="col-lg-9 col-xl-9">
+                                            <select id="provider_id" name="provider_id[]"
+                                                    class="form-control form-control-lg form-control-solid" multiple>
+                                                @foreach($providers as $provider)
+                                                    <option value="{{$provider->id}}">{{$provider->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="form-group row">
                                         <label class="col-xl-3 col-lg-3 col-form-label">{{__('dashboard.Image')}}</label>
                                         <div class="col-lg-9 col-xl-6">

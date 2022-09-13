@@ -28,6 +28,7 @@ class PackageRequest extends FormRequest
             'ar.name'=>'required',
             'image'=>'required',
             'price'=>'required',
+            'provider_id'=>'required|array',
         ];
     }
     public function messages()
@@ -37,6 +38,7 @@ class PackageRequest extends FormRequest
             'ar.name.required'=>'لم يتم ادخال الباقة بالعربي',
             'image.required'=>'لم يتم ادخال صورة الباقة',
             'price.required'=>'لم يتم ادخال سعر الباقة',
+            'provider_id.required'=>'لم يتم اختيار اي شركة',
         ];
     }
 }

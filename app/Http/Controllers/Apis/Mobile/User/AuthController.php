@@ -32,7 +32,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(),
             array(
                 'name' => 'required',
-                'email' => 'required',
+//                'email' => 'required',
                 'mobile' => 'required',
                 'lat' => 'required',
                 'lng' => 'required',
@@ -44,11 +44,13 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json(['code' => 401, 'status' => 'failed', 'msg' => $validator->errors()->first()]);
         }
+        if ($request->email!=null){
         $emialex = User::whereEmail($request->email)->whereNull('type_id')->get();
-        $mobileex = User::whereMobile($request->mobile)->whereNull('type_id')->get();
-        if (isset($emialex) && count($emialex) > 0) {
-            return response()->json(res_msg($request->header('lang'), failed(), 401, 'email_exist'));
+            if (isset($emialex) && count($emialex) > 0) {
+                return response()->json(res_msg($request->header('lang'), failed(), 401, 'email_exist'));
+            }
         }
+        $mobileex = User::whereMobile($request->mobile)->whereNull('type_id')->get();
         if (isset($mobileex) && count($mobileex) > 0) {
             return response()->json(res_msg($request->header('lang'), failed(), 401, 'phone_exist'));
         }

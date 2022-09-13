@@ -19,13 +19,19 @@
                         <!--begin::Breadcrumb-->
                         <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                             <li class="breadcrumb-item text-muted">
+                                @can('dashboard.index')
                                 <a href="{{route('dashboard.index')}}" class="text-muted">{{__('dashboard.Dashboard')}}</a>
+                                @endcan
                             </li>
                             <li class="breadcrumb-item text-muted">
+                                @can('admins.index')
                                 <a href="{{route('admins.index')}}" class="text-muted">{{__('dashboard.Admins')}}</a>
+                                @endcan
                             </li>
                             <li class="breadcrumb-item text-muted">
+                                @can('admins.edit')
                                 <a href="" class="text-muted">{{__('dashboard.Edit Admin')}}</a>
+                                @endcan
                             </li>
                         </ul>
                         <!--end::Breadcrumb-->

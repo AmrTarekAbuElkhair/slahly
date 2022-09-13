@@ -95,6 +95,7 @@ class ProviderBookingController extends Controller
             return response()->json(res_msg($lang, failed(), 401, 'order_not_found'));
         }else{
         $request['provider_id']=$provider->id;
+        $request['status']=$request->status;
         $this->providerObject->acceptOrder($request);
         return response(res_msg($lang, success(), 200, 'done'));
         }

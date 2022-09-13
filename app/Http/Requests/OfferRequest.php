@@ -24,23 +24,21 @@ class OfferRequest extends FormRequest
     public function rules()
     {
         return [
-            'service_id' =>'required',
-            'package_id'=>'required',
             'percentage'=>'required',
             'image'=>'required',
             'price_before_sale'=>'required',
             'price_after_sale'=>'required',
+            'provider_id'=>'required|array',
         ];
     }
     public function messages()
     {
         return [
-            'service_id.required'=>'لم يتم اختيار الخدمة',
-            'package_id.required'=>'لم يتم اختيار الباقة',
             'percentage.required'=>'لم يتم ادخال نسبة الخصم',
             'image.required'=>'لم يتم ادخال صورة العرض',
             'price_before_sale.required'=>'لم يتم ادخال سعر ما قبل الخصم',
             'price_after_sale.required'=>'لم يتم ادخال سعر ما بعد الخصم',
+            'provider_id.required'=>'لم يتم اختيار اي فني',
         ];
     }
 }

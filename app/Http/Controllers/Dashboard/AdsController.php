@@ -43,7 +43,7 @@ class AdsController extends Controller
         if (isset($request->url)){
         $data['url']=$request->url;
         }
-        if ($request->type==0){
+        if ($request->addstype==0){
             $data['offer_id']=$request->offer_id;
             $data['package_id']=null;
         }else{
@@ -95,7 +95,7 @@ class AdsController extends Controller
         $ad->start_date=$request->start_date;
         $ad->end_date=$request->end_date;
         $ad->save();
-        if ($request->type==0){
+        if ($request->addstype==0){
             Ad::where('id',$id)->update(['offer_id'=>$request->offer_id,'package_id'=>null]);
         }
         else{

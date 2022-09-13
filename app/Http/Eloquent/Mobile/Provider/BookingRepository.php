@@ -175,7 +175,7 @@ class BookingRepository implements BookingRepositoryInterface
         if(isset($order)) {
             $order->update(
                 [
-                    'provider_id' => $request->worker_id,
+                    'provider_id' => $request->provider_id,
                     'status' => $request->status,
                 ]
             );
@@ -232,19 +232,19 @@ class BookingRepository implements BookingRepositoryInterface
     public function rateOrder($request)
     {
         $lang = ($request->hasHeader('lang')) ? $request->header('lang') : 'en';
-        $user = User::where('id', $request->worker_id)->first();
+        $user = User::where('id', $request->provider_id)->first();
         $rate = Evaluation::where('order_id', $request->order_id)->first();
         if ($user->type_id == '1') {
             if (isset($rate)) {
                $rate->update([
-                    'provider_id' => $request->worker_id,
+                    'provider_id' => $request->provider_id,
                     'order_id' => $request->order_id,
                     'provider_rate' => $request->rate,
                     'provider_comment' => $request->comment
                 ]);
             } else {
                 Evaluation::create([
-                    'provider_id' => $request->worker_id,
+                    'provider_id' => $request->provider_id,
                     'order_id' => $request->order_id,
                     'provider_rate' => $request->rate,
                     'provider_comment' => $request->comment
@@ -253,14 +253,14 @@ class BookingRepository implements BookingRepositoryInterface
         } else {
             if (isset($rate)) {
                 $rate->update([
-                    'company_id' => $request->worker_id,
+                    'company_id' => $request->provider_id,
                     'order_id' => $request->order_id,
                     'provider_rate' => $request->rate,
                     'provider_comment' => $request->comment
                 ]);
             } else {
                 Evaluation::create([
-                    'provider_id' => $request->worker_id,
+                    'provider_id' => $request->provider_id,
                     'order_id' => $request->order_id,
                     'provider_rate' => $request->rate,
                     'provider_comment' => $request->comment
@@ -340,7 +340,7 @@ class BookingRepository implements BookingRepositoryInterface
     public function finishOrder($request,$lang)
     {
         $order=Order::where('id',$request->order_id)->where('provider_id',$request->provider_id)->first();
-        $price=WorkerPrice::where('worker_id',$order->worker_id)->first();
+        $price=WorkerPrice::where('worker_id',$request->provider_id)->first();
         $dt = Carbon::now();
         $t=$dt->toTimeString();
         $t1 = Carbon::parse("$order->date $order->time");
@@ -358,7 +358,7 @@ class BookingRepository implements BookingRepositoryInterface
         }
      $token=User::where('id',$order->user_id)->first()->firebase_token;
         $notify=Notification::where('type',9)->where('redirect',0)->first();
-        NotificationContent::where('order_id',$request->order_id)->where('provider_id',$order->worker_id)->update(['notification_id'=>7]);
+        NotificationContent::where('order_id',$request->order_id)->where('provider_id',$order->worker_id)->update(['notification_id'=>$notify->id]);
         NotificationContent::where('order_id',$request->order_id)->where('user_id',$order->user_id)->where('notification_id',10)->update(['notification_id'=>11]);
 		pushnotification($token , $notify->getTranslation($lang)->title, $notify->getTranslation($lang)->desc,$order->id,9);
         User::where('id',$request->provider_id)->update(['available'=>0,'lat'=>$request->lat,'lng'=>$request->lng]);

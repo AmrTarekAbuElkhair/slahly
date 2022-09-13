@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\OfferRequest;
 use App\Models\Offer;
 use App\Models\Package;
+use App\Models\ProviderOffer;
 use App\Models\Service;
+use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -32,7 +34,8 @@ class OffersController extends Controller
     {
         $services=Service::all();
         $packages=Package::all();
-        return view('pages.offers.create',compact('services','packages'));
+        $providers=User::whereIn('type_id',[1,2])->get();
+        return view('pages.offers.create',compact('services','packages','providers'));
     }
 
     /**
@@ -44,7 +47,24 @@ class OffersController extends Controller
     public function store(OfferRequest $request)
     {
         $data=$request->validated();
-        Offer::create($data);
+        if ($request->type=='0')
+        {
+            $data['service_id']=$request->service_id;
+            $data['package_id']=null;
+        }else{
+            $data['package_id']=$request->package_id;
+            $data['service_id']=null;
+        }
+        $offer=Offer::create($data);
+        $providers_id=$request->provider_id;
+        for($i=0; $i<count($providers_id);$i++){
+            ProviderOffer::create(
+                array(
+                    'provider_id'=>$providers_id[$i],
+                    'offer_id'=>$offer->id,
+                )
+            );
+        }
         Toastr::success('تم اضافة العرض بنجاح!','Success',["positionClass" => "toast-top-right"]);
         return redirect()->route('offers.index');
     }
@@ -71,7 +91,10 @@ class OffersController extends Controller
         $offer=Offer::findOrFail($id);
         $services=Service::all();
         $packages=Package::all();
-        return view('pages.offers.edit',compact('offer','services','packages'));
+        $offerProviders=ProviderOffer::where('offer_id',$offer->id)->pluck('provider_id');
+        $providers=User::whereIn('type_id',[1,2])->get();
+        return view('pages.offers.edit',compact('offer','services','packages'
+            ,'offerProviders','providers'));
     }
 
     /**
@@ -84,14 +107,30 @@ class OffersController extends Controller
     public function update(Request $request, $id)
     {
         $offer=Offer::findOrFail($id);
-        $offer->service_id=$request->service_id;
-        $offer->package_id=$request->package_id;
         $offer->percentage=$request->percentage;
         $offer->image=$request->image;
         $offer->status=$request->status;
         $offer->price_before_sale=$request->price_before_sale;
         $offer->price_after_sale=$request->price_after_sale;
         $offer->save();
+        if ($request->type==0){
+            Offer::where('id',$id)->update(['service_id'=>$request->service_id,'package_id'=>null]);
+        }
+        else{
+            Offer::where('id',$id)->update(['package_id'=>$request->package_id,'service_id'=>null]);
+        }
+        $providers_id=$request->provider_id;
+        if (isset($providers_id)){
+        ProviderOffer::where('offer_id', $offer->id)->delete();
+        for($i=0; $i<count($providers_id);$i++){
+            ProviderOffer::create(
+                array(
+                    'provider_id'=>$providers_id[$i],
+                    'offer_id'=>$offer->id,
+                )
+            );
+        }
+        }
         Toastr::success('تم تعديل العرض بنجاح!','Success',["positionClass" => "toast-top-right"]);
         return redirect()->route('offers.index');
     }
@@ -114,10 +153,18 @@ class OffersController extends Controller
         $offers = Offer::all();
         return DataTables::of($offers)
             ->editColumn('service_id', function ($model) {
+                if($model->service_id!=null){
                 return $model->service->name;
+                }else{
+                    return "service not found";
+                }
             })
             ->editColumn('package_id', function ($model) {
-                return $model->package->name;
+                if($model->package_id!=null) {
+                    return $model->package->name;
+                }else{
+                    return "package not found";
+                }
             })
             ->editColumn('control', function ($model) {
                 $all  = '<a data-toggle="tooltip" data-skin-class="tooltip-primary"  data-placement="top" href = "' . url('admin/offers/' . $model->id . '/edit') . '"   class="btn btn-sm btn-outline-success"><i class="fas fa-edit"></i></a> ';

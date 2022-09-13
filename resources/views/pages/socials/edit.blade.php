@@ -19,13 +19,20 @@
                         <!--begin::Breadcrumb-->
                         <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                             <li class="breadcrumb-item text-muted">
-                                <a href="{{route('dashboard.index')}}" class="text-muted">{{__('dashboard.Dashboard')}}</a>
+                                @can('dashboard.index')
+                                    <a href="{{route('dashboard.index')}}" class="text-muted">{{__('dashboard.Dashboard')}}</a>
+                                @endcan
+
                             </li>
                             <li class="breadcrumb-item text-muted">
-                                <a href="{{route('services.index')}}" class="text-muted">{{__('dashboard.Services')}}</a>
+                                @can('socials.index')
+                                    <a href="{{route('socials.index')}}" class="text-muted">{{__('dashboard.socials')}}</a>
+                                @endcan
                             </li>
                             <li class="breadcrumb-item text-muted">
-                                <a href="" class="text-muted">{{__('dashboard.Edit Service')}}</a>
+                                @can('socials.edit')
+                                <a href="" class="text-muted">{{__('dashboard.Edit social')}}</a>
+                                @endcan
                             </li>
                         </ul>
                         <!--end::Breadcrumb-->
@@ -51,8 +58,8 @@
                             <!--begin::Header-->
                             <div class="card-header py-3">
                                 <div class="card-title align-items-start flex-column">
-                                    <h3 class="card-label font-weight-bolder text-dark">{{__('dashboard.Edit Service')}}</h3>
-                                    <span class="text-muted font-weight-bold font-size-sm mt-1">{{__('dashboard.edit Service settings')}}</span>
+                                    <h3 class="card-label font-weight-bolder text-dark">{{__('dashboard.Edit social')}}</h3>
+                                    <span class="text-muted font-weight-bold font-size-sm mt-1">{{__('dashboard.edit social settings')}}</span>
                                 </div>
 
                             </div>

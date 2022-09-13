@@ -21,8 +21,9 @@ class UserResource extends JsonResource
         return [
             'id'               => $this->id,
             'name'             => $this->name,
-            'mobile'           => substr($this->mobile, 3,20),
-            'email'            => $this->email,
+            //'mobile'           => substr($this->mobile, 3,20),
+            'mobile'           => $this->mobile,
+            'email'            => $this->email!=null?$this->email:"",
             'lat'              => $this->lat,
             'lng'              => $this->lng,
             'address'          => $this->address,

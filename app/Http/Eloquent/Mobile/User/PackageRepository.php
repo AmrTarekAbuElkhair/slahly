@@ -46,7 +46,7 @@ class PackageRepository implements PackageRepositoryInterface
             $res_item['package_desc'] = $getDescs;
             $res_list[] = $res_item;
         }
-           $getcompanies=PackageCompany::where('package_id',$package_id)->pluck('company_id');
+           $getcompanies=PackageCompany::where('package_id',$package_id)->pluck('provider_id');
            $companies=User::whereIn('id',$getcompanies)->where('type_id','2')->select('id','name','image','rate')->get();
         $data=[
             'package_details'=>$res_list,

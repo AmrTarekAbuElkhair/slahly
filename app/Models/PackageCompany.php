@@ -9,16 +9,16 @@ class PackageCompany extends Model
 {
     use HasFactory;
     protected $table='package_companies';
-    protected $fillable=['package_id','company_id'];
+    protected $fillable=['package_id','provider_id'];
 
     public function package()
     {
         return $this->belongsTo(package::class,'package_id','id');
     }
 
-    public function company()
+    public function provider()
     {
-        return $this->belongsTo(User::class,'company_id','id');
+        return $this->belongsTo(User::class,'provider_id','id');
     }
 
 }

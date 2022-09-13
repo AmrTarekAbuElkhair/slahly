@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\NotificationRequest;
 use App\Models\Notification;
 use App\Models\NotificationContent;
 use App\Models\Provider;
@@ -31,7 +32,9 @@ class NotificationsController extends Controller
      */
     public function create()
     {
-        return view('pages.notifications.create');
+        $providers=User::whereNotNull('type_id')->get();
+        $users=User::whereNull('type_id')->get();
+        return view('pages.notifications.create',compact('providers','users'));
     }
 
     /**
@@ -40,30 +43,118 @@ class NotificationsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NotificationRequest $request)
     {
         if ($request->type == "5") {
-            User::whereNull('type_id')->chunk(50, function($users) use ($request) {
-                foreach ($users as $user) {
-                    NotificationContent::create([
-                        'notification_id'=> 5,
-                        'user_id'=> $user->id,
-                    ]);
-                    $notify=Notification::where('type',5)->first();
-                    pushnotification($user->firebase_token , $notify->title, $notify->desc,0,5);
-                }
-            });
+            if ($request->user_type == '0') {
+                $data=$request->validated();
+                $data['type']="5";
+                $data['redirect']="0";
+                $notify=Notification::create($data);
+                NotificationContent::create([
+                    'notification_id' => $notify->id,
+                    'user_id' => $request->user_id,
+                ]);
+                $user = User::where('id', $request->user_id)->first();
+                pushnotification($user->firebase_token, $notify->title, $notify->desc, 0, 5);
+            } elseif ($request->user_type == '1') {
+                $data=$request->validated();
+                $data['type']="5";
+                $data['redirect']="0";
+                $notify=Notification::create($data);
+                User::whereNull('type_id')->chunk(50, function ($users) use ($notify) {
+                    foreach ($users as $user) {
+                        NotificationContent::create([
+                            'notification_id' => $notify->id,
+                            'user_id' => $user->id,
+                        ]);
+//                        $notify = Notification::where('type', 5)->first();
+                        pushnotification($user->firebase_token, $notify->title, $notify->desc, 0, 5);
+                    }
+                });
+            } elseif ($request->user_type == '2') {
+                $data=$request->validated();
+                $data['type']="5";
+                $data['redirect']="1";
+                $notify=Notification::create($data);
+                NotificationContent::create([
+                    'notification_id' => $notify->id,
+                    'provider_id' => $request->provider_id,
+                ]);
+                $provider = User::where('id', $request->provider_id)->first();
+                pushnotification($provider->firebase_token, $notify->title, $notify->desc, 0, 5);
+            } else {
+                $data=$request->validated();
+                $data['type']="5";
+                $data['redirect']="1";
+                $notify=Notification::create($data);
+                User::whereNotNull('type_id')->chunk(50, function ($providers) use ($notify) {
+                    foreach ($providers as $provider) {
+                        NotificationContent::create([
+                            'notification_id' => $notify->id,
+                            'provider_id' => $provider->id,
+                        ]);
+                        //$notify = Notification::where('type', 5)->first();
+                        pushnotification($provider->firebase_token, $notify->title, $notify->desc, 0, 5);
+                    }
+                });
+            }
         }else{
-            User::whereNull('type_id')->chunk(50, function($users) use ($request) {
-                foreach ($users as $user) {
-                    NotificationContent::create([
-                        'notification_id'=> 6,
-                        'user_id'=> $user->id,
-                    ]);
-                    $notify=Notification::where('type',6)->first();
-                    pushnotification($user->firebase_token , $notify->title, $notify->desc,0,6);
-                }
-            });
+            if ($request->user_type == '0') {
+                $data=$request->validated();
+                $data['type']="6";
+                $data['redirect']="0";
+                $notify=Notification::create($data);
+                NotificationContent::create([
+                    'notification_id' => $notify->id,
+                    'user_id' => $request->user_id,
+                ]);
+                $user = User::where('id', $request->user_id)->first();
+                //$notify = Notification::where('type', 6)->first();
+                pushnotification($user->firebase_token, $notify->title, $notify->desc, 0, 6);
+            } elseif ($request->user_type == '1') {
+                $data=$request->validated();
+                $data['type']="6";
+                $data['redirect']="0";
+                $notify=Notification::create($data);
+                User::whereNull('type_id')->chunk(50, function ($users) use ($notify) {
+                    foreach ($users as $user) {
+                        NotificationContent::create([
+                            'notification_id' => $notify->id,
+                            'user_id' => $user->id,
+                        ]);
+                       // $notify = Notification::where('type', 6)->first();
+                        pushnotification($user->firebase_token, $notify->title, $notify->desc, 0, 6);
+                    }
+                });
+            } elseif ($request->user_type == '2') {
+                $data=$request->validated();
+                $data['type']="6";
+                $data['redirect']="1";
+                $notify=Notification::create($data);
+                NotificationContent::create([
+                    'notification_id' =>$notify->id,
+                    'provider_id' => $request->provider_id,
+                ]);
+                $provider = User::where('id', $request->provider_id)->first();
+                //$notify = Notification::where('type', 6)->first();
+                pushnotification($provider->firebase_token, $notify->title, $notify->desc, 0, 6);
+            } else {
+                $data=$request->validated();
+                $data['type']="6";
+                $data['redirect']="1";
+                $notify=Notification::create($data);
+                User::whereNotNull('type_id')->chunk(50, function ($providers) use ($notify) {
+                    foreach ($providers as $provider) {
+                        NotificationContent::create([
+                            'notification_id' =>$notify->id,
+                            'provider_id' => $provider->id,
+                        ]);
+                        //$notify = Notification::where('type', 5)->first();
+                        pushnotification($provider->firebase_token, $notify->title, $notify->desc, 0, 6);
+                    }
+                });
+            }
         }
         Toastr::success('تم ارسال الاشعارات بنجاح!', 'Success', ["positionClass" => "toast-top-right"]);
         return redirect()->route('notifications.index');
@@ -119,11 +210,11 @@ class NotificationsController extends Controller
 
     public function dataTable()
     {
-        $notifications = NotificationContent::where('notification_id',[5,6])->get();
+        $notifications = Notification::where('type',[5,6])->get();
         return DataTables::of($notifications)
             ->editColumn('title', function ($model) {
-                if (isset($model->notification->title)){
-                    return $model->notification->title;
+                if (isset($model->title)){
+                    return strip_tags($model->title);
                 }else{
                     return "title not found";
                 }

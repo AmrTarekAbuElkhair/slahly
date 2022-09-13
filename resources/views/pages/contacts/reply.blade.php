@@ -19,13 +19,19 @@
                         <!--begin::Breadcrumb-->
                         <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                             <li class="breadcrumb-item text-muted">
-                                <a href="{{route('dashboard.index')}}" class="text-muted">{{__('dashboard.Dashboard')}}</a>
+                                @can('dashboard.index')
+                                    <a href="{{route('dashboard.index')}}" class="text-muted">{{__('dashboard.Dashboard')}}</a>
+                                @endcan
                             </li>
                             <li class="breadcrumb-item text-muted">
+                                @can('contacts.reply')
                                 <a href="{{route('contacts.reply',$contact->id)}}" class="text-muted">{{__('dashboard.reply')}}</a>
+                                @endcan
                             </li>
                             <li class="breadcrumb-item text-muted">
+                                @can('contacts.store.reply')
                                 <a href="" class="text-muted">{{__('dashboard.send message')}}</a>
+                                @endcan
                             </li>
                         </ul>
                         <!--end::Breadcrumb-->

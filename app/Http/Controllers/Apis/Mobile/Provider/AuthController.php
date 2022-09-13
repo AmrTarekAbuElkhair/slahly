@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Interfaces\Mobile\Provider\AuthRepositoryInterface;
 use App\Http\Resources\ProviderResource;
 use App\Http\Resources\UserResource;
+use App\Models\CompanyService;
 use App\Models\Notification;
 use App\Models\NotificationContent;
 use App\Models\Order;
@@ -38,7 +39,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(),
             array(
                 'name' => 'required',
-                'email' => 'required',
+//                'email' => 'required',
                 'mobile' => 'required',
                 'lat' => 'required',
                 'lng' => 'required',
@@ -52,11 +53,13 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json(['code'=>401 , 'status' => 'failed', 'msg' => $validator->errors()->first()]);
         }
+        if ($request->email!=null){
         $emialex = User::whereEmail($request->email)->where('type_id','!=',null)->get();
-        $mobileex = User::whereMobile($request->mobile)->where('type_id','!=',null)->get();
-        if (isset($emialex) && count($emialex) > 0) {
-            return response()->json(res_msg($request->header('lang'), failed(), 401, 'email_exist'));
+            if (isset($emialex) && count($emialex) > 0) {
+                return response()->json(res_msg($request->header('lang'), failed(), 401, 'email_exist'));
+            }
         }
+        $mobileex = User::whereMobile($request->mobile)->where('type_id','!=',null)->get();
         if (isset($mobileex) && count($mobileex) > 0) {
             return response()->json(res_msg($request->header('lang'), failed(), 401, 'phone_exist'));
         }
@@ -69,7 +72,7 @@ class AuthController extends Controller
         $data = $request->all();
         $data['available'] = "1";
         $currentUserInfo = \Location::get(request()->ip());
-        $data['city'] = $currentUserInfo->cityName;
+        $data['city'] = "cairo";
         if ($request->type_id==1) {
             $validator = Validator::make($request->all(),
                 array(
@@ -91,11 +94,18 @@ class AuthController extends Controller
             ]);
             }
         }
-        $this->authObject->sendVerificationCode($provider);
-        $code=Verification::where('user_id',$provider->id)->first();
-        _fireSMS($getphone,$code->code);
+        //$this->authObject->sendVerificationCode($provider);
+        //$code=Verification::where('user_id',$provider->id)->first();
+        //_fireSMS($getphone,$code->code);
 		//        $provider_model = User::providerModel(null,$entity);
-        return response(res($lang, success(), 200,'done', ['code' => "$code->code"]));
+        $verification_Ob = new Verification();
+        $verification_Ob->user_id = $provider->id;
+        $digits = 5;
+        $code = rand(pow(10, $digits - 1), pow(10, $digits) - 1);
+        $verification_Ob->code = $code;
+        $verification_Ob->save();
+        _fireSMS($getphone,$code);
+        return response(res($lang, success(), 200,'done', ['code' => "$code"]));
     }
 
 

@@ -19,13 +19,20 @@
                         <!--begin::Breadcrumb-->
                         <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                             <li class="breadcrumb-item text-muted">
-                                <a href="{{route('dashboard.index')}}" class="text-muted">{{__('dashboard.Dashboard')}}</a>
+                                @can('dashboard.index')
+                                    <a href="{{route('dashboard.index')}}"
+                                       class="text-muted">{{__('dashboard.Dashboard')}}</a>
+                                @endcan
                             </li>
                             <li class="breadcrumb-item text-muted">
-                                <a href="{{route('offers.index')}}" class="text-muted">{{__('dashboard.offers')}}</a>
+                                @can('offers.index')
+                                    <a href="{{route('offers.index')}}" class="text-muted">{{__('dashboard.offers')}}</a>
+                                @endcan
                             </li>
                             <li class="breadcrumb-item text-muted">
+                                @can('offers.edit')
                                 <a href="" class="text-muted">{{__('dashboard.Edit offer')}}</a>
+                                @endcan
                             </li>
                         </ul>
                         <!--end::Breadcrumb-->
@@ -62,24 +69,34 @@
                                 @csrf
                                 <div class="card-body">
                                     <!--begin::Heading-->
-
                                     <div class="form-group row">
+                                        <label
+                                            class="col-xl-3 col-lg-3 col-form-label">{{__('dashboard.offer type')}}</label>
+                                        <div class="col-lg-9 col-xl-9">
+                                            <select id="addstype" name="type"
+                                                    class="form-control form-control-lg form-control-solid">
+                                                <option value="0" status="0">{{__('dashboard.service')}}</option>
+                                                <option value="1" status="1">{{__('dashboard.package')}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div id="services" class="form-group row showOrHide" style="display: {{isset($offer->service_id) ? "" : "none"}}">
                                         <label class="col-xl-3 col-lg-3 col-form-label">{{__('dashboard.Select service')}}</label>
                                         <div class="col-lg-9 col-xl-9">
                                             <select name="service_id" class="form-control form-control-lg form-control-solid">
                                                 @foreach($services as $service)
-                                                    <option @if($service->id==$offer->service->id) selected @endif value="{{$service->id}}">{{$service->name}}</option>
+                                                    <option @if(isset($offer->service_id)){{$service->id==$offer->service->id ? 'selected' : '' }} @endif value="{{$service->id}}">{{$service->name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
 
-                                    <div class="form-group row">
+                                    <div id="packages" class="form-group row showOrHide" style="display: {{isset($offer->package_id) ? "" : "none"}}">
                                         <label class="col-xl-3 col-lg-3 col-form-label">{{__('dashboard.Select package')}}</label>
                                         <div class="col-lg-9 col-xl-9">
                                             <select name="package_id" class="form-control form-control-lg form-control-solid">
                                                 @foreach($packages as $package)
-                                                    <option @if($package->id==$offer->package->id) selected @endif value="{{$package->id}}">{{$package->name}}</option>
+                                                    <option @if(isset($offer->package_id)){{$package->id==$offer->package->id ? 'selected' : '' }} @endif value="{{$package->id}}">{{$package->name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -112,6 +129,21 @@
                                         </div>
                                     </div>
                                     <!--begin::Form Group-->
+
+                                    <div class="form-group row">
+                                        <label
+                                            class="col-xl-3 col-lg-3 col-form-label">{{__('dashboard.Select provider')}}</label>
+                                        <div class="col-lg-9 col-xl-9">
+                                            <select id="provider_id" name="provider_id[]"
+                                                    class="form-control form-control-lg form-control-solid" multiple>
+                                                @foreach($providers as $provider)
+                                                    <option @if(isset($offerProviders)) @foreach($offerProviders as $p) @if ($p==$provider->id) selected @else "" @endif @endforeach @endif value="{{$provider->id}}">{{$provider->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+
                                     <div class="form-group row">
                                         <label class="col-xl-3 col-lg-3 col-form-label">{{__('dashboard.Image')}}</label>
                                         <div class="col-lg-9 col-xl-9">
@@ -160,37 +192,22 @@
 @endsection
 @section('myjsfile')
     <script>
-
-        $(document).ready(function(){
-            $("#addstype").on('change',function(){
+        $(document).ready(function () {
+            $("#addstype").on('change', function () {
                 var addstype = $(this).val();
-                if(addstype == 0||addstype == 1){
-                    //teachers
-                    $("#teachers").css('display','none');
-                    $("#subjects").css('display','none');
-                    $("#classes").css('display','none');
+                if (addstype == 0) {
+                    //stores
+                    $("#services").css('display', '');
+                    $("#packages").css('display', 'none');
                 }
-                if(addstype == 2){
-                    //teachers
-                    $("#teachers").css('display','');
-                    $("#subjects").css('display','none');
-                    $("#classes").css('display','none');
-                }
-                if(addstype == 3){
-                    //classes
-                    $("#classes").css('display','');
-                    $("#subjects").css('display','none');
-                    $("#teachers").css('display','none');
-                }
-                if(addstype == 4){
-                    //subjects
-                    $("#subjects").css('display','');
-                    $("#classes").css('display','none');
-                    $("#teachers").css('display','none');
+                if (addstype == 1) {
+                    $("#packages").css('display', '');
+                    $("#services").css('display', 'none');
                 }
 
             });
 
         });
     </script>
+
 @endsection

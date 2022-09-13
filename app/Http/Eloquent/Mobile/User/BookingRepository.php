@@ -394,13 +394,11 @@ class BookingRepository implements BookingRepositoryInterface
                     'user_rate'=>$request->rate,
                     'user_comment'=>$request->comment
                 ]);
-
             }
             $provider=Order::where('id',$request->order_id)->pluck('provider_id');
             $evaluations=round(Evaluation::where('provider_id',$provider)->avg('user_rate'),2);
-            User::where('id',$provider->id)->update(['rate'=>$evaluations]);
+            User::where('id',$provider)->update(['rate'=>$evaluations]);
         }
-
     }
 
     public function cancelOrder($request){

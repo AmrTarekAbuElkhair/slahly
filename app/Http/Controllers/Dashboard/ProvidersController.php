@@ -7,11 +7,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProviderRequest;
 use App\Http\Requests\UserRequest;
 use App\Models\City;
+use App\Models\CompanyService;
 use App\Models\Country;
 use App\Models\Neighborhood;
 use App\Models\PackageCompany;
 use App\Models\ProviderOffer;
 use App\Models\QrCode;
+use App\Models\Service;
 use App\Models\User;
 use App\Models\Offer;
 use App\Models\Package;
@@ -67,6 +69,13 @@ class ProvidersController extends Controller
         }
         if (isset($request->offer_id)&&$request->type_id==2){
             ProviderOffer::create(['offer_id'=>$request->offer_id,'company_id'=>$provider->id]);
+            $services=Service::pluck('id');
+            foreach ($services as $service){
+                CompanyService::create([
+                    'service_id'=>$service,
+                    'company_id'=>$provider->id
+                ]);
+            }
         }
         Toastr::success('تم انشاء حساب الفني بنجاح!','Success',["positionClass" => "toast-top-right"]);
         return redirect()->route('providers.index');
@@ -147,7 +156,15 @@ class ProvidersController extends Controller
         }
         if (isset($request->offer_id)&&$request->type_id==2){
             ProviderOffer::where('company_id',$provider->id)->delete();
+            CompanyService::where('company_id',$provider->id)->delete();
             ProviderOffer::create(['offer_id'=>$request->offer_id,'company_id'=>$provider->id]);
+            $services=Service::pluck('id');
+            foreach ($services as $service){
+                CompanyService::create([
+                    'service_id'=>$service,
+                    'company_id'=>$provider->id
+                ]);
+            }
         }
         Toastr::success('تم تعديل بيانات الفني بنجاح!','Success',["positionClass" => "toast-top-right"]);
         return redirect()->route('providers.index');

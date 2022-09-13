@@ -102,7 +102,7 @@ class SettingsRepository implements SettingsRepositoryInterface
 
     public function getProviderTypes($lang)
     {
-        $types = Type::where('status','1')->get();
+        $types = Type::where('status','1')->orderBy('id','desc')->get();
         $alltypes = array();
         $i = 0;
         foreach ($types as $type) {

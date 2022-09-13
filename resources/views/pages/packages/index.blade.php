@@ -15,10 +15,16 @@
                         <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
 
                             <li class="breadcrumb-item text-muted">
-                                <a href="" class="text-muted">{{__('dashboard.Dashboard')}}</a>
+                                @can('dashboard.index')
+                                    <a href="{{route('dashboard.index')}}"
+                                       class="text-muted">{{__('dashboard.Dashboard')}}</a>
+                                @endcan
                             </li>
                             <li class="breadcrumb-item text-muted">
-                                <a href="" class="text-muted">{{__('dashboard.packages')}}</a>
+                                @can('packages.index')
+                                    <a href="{{route('packages.index')}}"
+                                       class="text-muted">{{__('dashboard.packages')}}</a>
+                                @endcan
                             </li>
                         </ul>
                         <!--end::Breadcrumb-->
@@ -47,16 +53,22 @@
                         <div class="card-toolbar">
 
                             <!--begin::Button-->
-                            <a href="{{route('packages.create')}}" class="btn btn-primary font-weight-bolder">
-                                <i class="la la-plus"></i>{{__('dashboard.New Record')}}</a>
-                            <!--end::Button-->
+                            @can('packages.create')
+                                <a href="{{route('packages.create')}}" class="btn btn-primary font-weight-bolder">
+                                    <i class="la la-plus"></i>{{__('dashboard.New Record')}}
+                                </a>
+                        @endcan
+
+
+                        <!--end::Button-->
                         </div>
                     </div>
 
 
                     <div class="card-body">
                         <!--begin: Datatable-->
-                        <table class="table table-bordered table-hover table-responsive" id="myTable" style="margin-top: 13px !important">
+                        <table class="table table-bordered table-hover table-responsive" id="myTable"
+                               style="margin-top: 13px !important">
                             <thead>
                             <tr>
                                 <th>#</th>
@@ -83,7 +95,7 @@
 @endsection
 @section('myjsfile')
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             var ajaxUrl = "packages";
             var data = [
                 {data: 'id'},
@@ -91,7 +103,7 @@
                 {data: 'created_at'},
                 {data: 'control'},
             ];
-            _DataTableHandler(ajaxUrl,data);
+            _DataTableHandler(ajaxUrl, data);
         });
     </script>
 @endsection

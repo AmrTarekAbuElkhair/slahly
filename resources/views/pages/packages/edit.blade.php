@@ -19,13 +19,19 @@
                         <!--begin::Breadcrumb-->
                         <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                             <li class="breadcrumb-item text-muted">
-                                <a href="{{route('dashboard.index')}}" class="text-muted">{{__('dashboard.Dashboard')}}</a>
+                                @can('dashboard.index')
+                                    <a href="{{route('dashboard.index')}}" class="text-muted">{{__('dashboard.Dashboard')}}</a>
+                                @endcan
                             </li>
                             <li class="breadcrumb-item text-muted">
-                                <a href="{{route('packages.index')}}" class="text-muted">{{__('dashboard.packages')}}</a>
+                                @can('packages.index')
+                                    <a href="{{route('packages.index')}}" class="text-muted">{{__('dashboard.packages')}}</a>
+                                @endcan
                             </li>
                             <li class="breadcrumb-item text-muted">
+                                @can('packages.edit')
                                 <a href="" class="text-muted">{{__('dashboard.Edit package')}}</a>
+                                @endcan
                             </li>
                         </ul>
                         <!--end::Breadcrumb-->
@@ -88,6 +94,18 @@
 
                                             <input class="form-control form-control-lg form-control-solid" type="number" placeholder="{{__('dashboard.price')}}" name="price" value="{{$package->price}}"/>
 
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label
+                                            class="col-xl-3 col-lg-3 col-form-label">{{__('dashboard.Select provider')}}</label>
+                                        <div class="col-lg-9 col-xl-9">
+                                            <select id="provider_id" name="provider_id[]"
+                                                    class="form-control form-control-lg form-control-solid" multiple>
+                                                @foreach($providers as $provider)
+                                                    <option @if(isset($packageProviders)) @foreach($packageProviders as $p) @if ($p==$provider->id) selected @else "" @endif @endforeach @endif value="{{$provider->id}}">{{$provider->name}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group row">

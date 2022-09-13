@@ -7,7 +7,8 @@
                 <!--begin::Info-->
                 <div class="d-flex align-items-center flex-wrap mr-1">
                     <!--begin::Mobile Toggle-->
-                    <button class="burger-icon burger-icon-left mr-4 d-inline-block d-lg-none" id="kt_subheader_mobile_toggle">
+                    <button class="burger-icon burger-icon-left mr-4 d-inline-block d-lg-none"
+                            id="kt_subheader_mobile_toggle">
                         <span></span>
                     </button>
                     <!--end::Mobile Toggle-->
@@ -19,13 +20,21 @@
                         <!--begin::Breadcrumb-->
                         <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                             <li class="breadcrumb-item text-muted">
-                                <a href="{{route('dashboard.index')}}" class="text-muted">{{__('dashboard.Dashboard')}}</a>
+                                @can('dashboard.index')
+                                    <a href="{{route('dashboard.index')}}"
+                                       class="text-muted">{{__('dashboard.Dashboard')}}</a>
+                                @endcan
                             </li>
                             <li class="breadcrumb-item text-muted">
-                                <a href="{{route('instructions.index')}}" class="text-muted">{{__('dashboard.instructions')}}</a>
+                                @can('instructions.index')
+                                    <a href="{{route('instructions.index')}}"
+                                       class="text-muted">{{__('dashboard.instructions')}}</a>
+                                @endcan
                             </li>
                             <li class="breadcrumb-item text-muted">
-                                <a href="" class="text-muted">{{__('dashboard.Create instruction')}}</a>
+                                @can('instructions.create')
+                                    <a href="" class="text-muted">{{__('dashboard.Create instruction')}}</a>
+                                @endcan
                             </li>
                         </ul>
                         <!--end::Breadcrumb-->
@@ -52,13 +61,15 @@
                             <div class="card-header py-3">
                                 <div class="card-title align-items-start flex-column">
                                     <h3 class="card-label font-weight-bolder text-dark">{{__('dashboard.Create instruction')}}</h3>
-                                    <span class="text-muted font-weight-bold font-size-sm mt-1">{{__('dashboard.Create new instruction')}}</span>
+                                    <span
+                                        class="text-muted font-weight-bold font-size-sm mt-1">{{__('dashboard.Create new instruction')}}</span>
                                 </div>
 
                             </div>
                             <!--end::Header-->
                             <!--begin::Form-->
-                            <form class="form" action="{{route('instructions.store')}}" method="post" enctype="multipart/form-data">
+                            <form class="form" action="{{route('instructions.store')}}" method="post"
+                                  enctype="multipart/form-data">
                                 @csrf
                                 <div class="card-body">
                                     <!--begin::Heading-->
@@ -66,14 +77,16 @@
                                     <!--begin::Form Group-->
 
                                     <div class="form-group row">
-                                        <label class="col-form-label col-lg-3 col-sm-12 text-right">{{__('dashboard.Text in english')}}</label>
+                                        <label
+                                            class="col-form-label col-lg-3 col-sm-12 text-right">{{__('dashboard.Text in english')}}</label>
                                         <div class="col-lg-7 col-md-9 col-sm-12">
                                             <textarea class="ckeditor form-control" name="en[text]"></textarea>
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="col-form-label col-lg-3 col-sm-12 text-right">{{__('dashboard.Text in arabic')}}</label>
+                                        <label
+                                            class="col-form-label col-lg-3 col-sm-12 text-right">{{__('dashboard.Text in arabic')}}</label>
                                         <div class="col-lg-7 col-md-9 col-sm-12">
                                             <textarea class="ckeditor form-control" name="ar[text]"></textarea>
                                         </div>
@@ -98,7 +111,7 @@
 
 @section('myjsfile')
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('.ckeditor').ckeditor();
         });
     </script>

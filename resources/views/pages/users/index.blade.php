@@ -16,12 +16,16 @@
                         <!--end::Page Title-->
                         <!--begin::Breadcrumb-->
                         <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
-
                             <li class="breadcrumb-item text-muted">
-                                <a href="" class="text-muted">{{__('dashboard.Dashboard')}}</a>
+                                @can('dashboard.index')
+                                    <a href="{{route('dashboard.index')}}"
+                                       class="text-muted">{{__('dashboard.Dashboard')}}</a>
+                                @endcan
                             </li>
                             <li class="breadcrumb-item text-muted">
-                                <a href="" class="text-muted">{{__('dashboard.Users')}}</a>
+                                @can('users.index')
+                                    <a href="{{route('users.index')}}" class="text-muted">{{__('dashboard.Users')}}</a>
+                                @endcan
                             </li>
                         </ul>
                         <!--end::Breadcrumb-->
@@ -50,7 +54,8 @@
                         <div class="card-toolbar">
                             <!--begin::Dropdown-->
                             <div class="dropdown dropdown-inline mr-2">
-                                <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="la la-download"></i>{{__('dashboard.Export')}}</button>
                                 <!--begin::Dropdown Menu-->
                                 <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
@@ -58,10 +63,12 @@
                                         <li class="nav-header font-weight-bolder text-uppercase text-primary pb-2">{{__('dashboard.Choose an option:')}}</li>
 
                                         <li class="nav-item">
-                                            <a href="{{route('users.export')}}" class="nav-link">
-                                                <i class="nav-icon la la-file-excel-o"></i>
-                                                <span class="nav-text">{{__('dashboard.Excel')}}</span>
-                                            </a>
+                                            @can('users.export')
+                                                <a href="{{route('users.export')}}" class="nav-link">
+                                                    <i class="nav-icon la la-file-excel-o"></i>
+                                                    <span class="nav-text">{{__('dashboard.Excel')}}</span>
+                                                </a>
+                                            @endcan
                                         </li>
                                     </ul>
                                 </div>
@@ -69,29 +76,41 @@
                             </div>
                             <!--end::Dropdown-->
                             <!--begin::Button-->
-                            <a href="{{route('users.create')}}" class="btn btn-primary font-weight-bolder">
-                                <i class="la la-plus"></i>{{__('dashboard.New Record')}}</a>
+                            @can('users.create')
+                                <a href="{{route('users.create')}}" class="btn btn-primary font-weight-bolder">
+                                    <i class="la la-plus"></i>{{__('dashboard.New Record')}}</a>
+                            @endcan
+
 
                             {{--    Sharaqi   --}}
-                            <form action="{{route('users.all.delete')}}" method="post" style="margin-left: 10px">
-                                @csrf
-                                <input id='deleteUsersBtn' type="submit" class="btn btn-primary mr-2" value="delete all users" disabled />
+                            @can('users.all.delete')
+                                <form action="{{route('users.all.delete')}}" method="post" style="margin-left: 10px">
+                                    @csrf
+                                    <input id='deleteUsersBtn' type="submit" class="btn btn-primary mr-2"
+                                           value="delete all users" disabled/>
 
-                            </form>
-                            <!--end::Button-->
+                                </form>
+                        @endcan
+
+                        <!--end::Button-->
                         </div>
                     </div>
                     <div class="card-body">
                         <!--begin: Datatable-->
-                        <table class="table table-bordered table-hover table-responsive" id="myTable" style="margin-top: 13px !important">
+                        <table class="table table-bordered table-hover table-responsive" id="myTable"
+                               style="margin-top: 13px !important">
                             <thead>
                             <tr>
+                                @can('users.all.delete')
                                 <th>
                                     <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                        <input onclick="handleCkhk()" type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" id="mainCh"/>
+                                        <input onclick="handleCkhk()" type="checkbox" class="group-checkable"
+                                               data-set="#sample_1 .checkboxes" id="mainCh"/>
                                         <span></span>
                                     </label>
                                 </th>
+                                @endcan
+
                                 <th>#</th>
                                 <th>{{__('dashboard.Name')}}</th>
                                 <th>{{__('dashboard.Email')}}</th>
@@ -119,7 +138,7 @@
 @endsection
 @section('myjsfile')
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             var ajaxUrl = "users";
             var data = [
                 {data: "select", "searchable": false, "orderable": false},
@@ -133,7 +152,7 @@
                 {data: 'created_at'},
                 {data: 'control'},
             ];
-            _DataTableHandler(ajaxUrl,data);
+            _DataTableHandler(ajaxUrl, data);
 
 
         });
@@ -159,18 +178,18 @@
     </script>
 
 
-{{--    Edited by Sharaqi   --}}
+    {{--    Edited by Sharaqi   --}}
     <script>
         var x = [];
         var handleCkhk = () => {
-            if(document.getElementById('mainCh').checked){
+            if (document.getElementById('mainCh').checked) {
                 @foreach($users as $user)
-                    document.getElementById({{$user}} + 'ch').checked = true;
+                document.getElementById({{$user}} + 'ch').checked = true;
                 @endforeach
                 document.getElementById('deleteUsersBtn').disabled = false;
-            }else{
+            } else {
                 @foreach($users as $user)
-                    document.getElementById({{$user}} + 'ch').checked = false;
+                document.getElementById({{$user}} + 'ch').checked = false;
                 @endforeach
                 document.getElementById('deleteUsersBtn').disabled = true;
             }

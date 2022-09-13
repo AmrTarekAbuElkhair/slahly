@@ -20,15 +20,22 @@
                         <!--begin::Breadcrumb-->
                         <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                             <li class="breadcrumb-item text-muted">
-                                <a href="{{route('dashboard.index')}}"
-                                   class="text-muted">{{__('dashboard.Dashboard')}}</a>
+                                @can('dashboard.index')
+                                    <a href="{{route('dashboard.index')}}"
+                                       class="text-muted">{{__('dashboard.Dashboard')}}</a>
+                                @endcan
                             </li>
                             <li class="breadcrumb-item text-muted">
-                                <a href="{{route('orders.index')}}" class="text-muted">{{__('dashboard.Orders')}}</a>
+                                @can('orders-management.index')
+                                    <a href="{{route('orders-management.index')}}"
+                                       class="text-muted">{{__('dashboard.orders management')}}</a>
+                                @endcan
                             </li>
                             <li class="breadcrumb-item text-muted">
-                                <a href={{route('orders.show',$order->id)}}""
-                                   class="text-muted">{{__('dashboard.Show Order')}}</a>
+                                @can('orders-management.show')
+                                    <a href="{{route('orders-management.show',$order->id)}}"
+                                       class="text-muted">{{__('dashboard.Show orders management')}}</a>
+                                @endcan
                             </li>
                         </ul>
                         <!--end::Breadcrumb-->
@@ -54,9 +61,9 @@
                             <!--begin::Header-->
                             <div class="card-header py-3">
                                 <div class="card-title align-items-start flex-column">
-                                    <h3 class="card-label font-weight-bolder text-dark">{{__('dashboard.Show Order')}}</h3>
+                                    <h3 class="card-label font-weight-bolder text-dark">{{__('dashboard.Show orders management')}}</h3>
                                     <span
-                                        class="text-muted font-weight-bold font-size-sm mt-1">{{__('dashboard.show order settings')}}</span>
+                                        class="text-muted font-weight-bold font-size-sm mt-1">{{__('dashboard.show orders management settings')}}</span>
                                 </div>
                             </div>
                             <!--end::Header-->
@@ -82,7 +89,8 @@
 
                                             <input class="form-control form-control-lg form-control-solid" id="name"
                                                    type="text" placeholder="{{__('dashboard.User')}}" name="name"
-                                                   value="@if(isset($order->user_id)){{$order->user->name}} @else user not found @endif" readonly/>
+                                                   value="@if(isset($order->user_id)){{$order->user->name}} @else user not found @endif"
+                                                   readonly/>
 
                                         </div>
                                     </div>
@@ -94,7 +102,8 @@
 
                                             <input class="form-control form-control-lg form-control-solid" id="name"
                                                    type="text" placeholder="{{__('dashboard.Provider')}}" name="name"
-                                                   value="@if(isset($order->provider_id)){{$order->provider->name}} @else provider not found @endif" readonly/>
+                                                   value="@if(isset($order->provider_id)){{$order->provider->name}} @else provider not found @endif"
+                                                   readonly/>
                                         </div>
                                     </div>
 
@@ -106,7 +115,8 @@
 
                                             <input class="form-control form-control-lg form-control-solid" id="name"
                                                    type="text" placeholder="{{__('dashboard.package')}}" name="name"
-                                                   value="@if(isset($order->package_id)) {{$order->package->name}} @else package not found @endif" readonly/>
+                                                   value="@if(isset($order->package_id)) {{$order->package->name}} @else package not found @endif"
+                                                   readonly/>
 
                                         </div>
                                     </div>
@@ -118,7 +128,8 @@
 
                                             <input class="form-control form-control-lg form-control-solid" id="name"
                                                    type="text" placeholder="{{__('dashboard.service')}}" name="name"
-                                                   value="@if(isset($order->service_id)) {{$order->service->name}} @else service not found @endif" readonly/>
+                                                   value="@if(isset($order->service_id)) {{$order->service->name}} @else service not found @endif"
+                                                   readonly/>
 
                                         </div>
                                     </div>
@@ -130,7 +141,8 @@
 
                                             <input class="form-control form-control-lg form-control-solid" id="name"
                                                    type="text" placeholder="{{__('dashboard.offer')}}" name="name"
-                                                   value="@if(isset($order->offer_id)) {{$order->offer->name}} @else offer not found @endif" readonly/>
+                                                   value="@if(isset($order->offer_id)) {{$order->offer->name}} @else offer not found @endif"
+                                                   readonly/>
 
                                         </div>
                                     </div>
@@ -180,7 +192,8 @@
 
                                             <input class="form-control form-control-lg form-control-solid" id="status"
                                                    type="text" placeholder="{{__('dashboard.status')}}" name="status"
-                                                   value="@if($order->status==0) new @elseif($order->status==1) in way @elseif($order->status==2) arrived @elseif($order->status==3) start processing @elseif($order->status==4) finished from user @elseif($order->status==5) finished from worker @elseif($order->status==6) paid @else cancelled @endif" readonly/>
+                                                   value="@if($order->status==0) new @elseif($order->status==1) in way @elseif($order->status==2) arrived @elseif($order->status==3) start processing @elseif($order->status==4) finished from user @elseif($order->status==5) finished from worker @elseif($order->status==6) paid @else cancelled @endif"
+                                                   readonly/>
 
                                         </div>
                                     </div>
@@ -255,7 +268,8 @@
                                             <input class="form-control form-control-lg form-control-solid"
                                                    id="working_hours" type="text"
                                                    placeholder="{{__('dashboard.working_hours')}}" name="working_hours"
-                                                   value="{{intdiv($order->working_hours, 60).':'. ($order->working_hours % 60)}}" readonly/>
+                                                   value="{{intdiv($order->working_hours, 60).':'. ($order->working_hours % 60)}}"
+                                                   readonly/>
                                         </div>
                                     </div>
 
@@ -333,54 +347,63 @@
                                 <!--end::Form-->
                             </div>
 
-                            <div class="card card-custom">
-                                <!--begin::Header-->
-                                <div class="card-header py-3">
-                                    <div class="card-title align-items-start flex-column">
-                                        <h3 class="card-label font-weight-bolder text-dark">{{__('dashboard.Edit order')}}</h3>
-                                        <span class="text-muted font-weight-bold font-size-sm mt-1">{{__('dashboard.Edit Order data')}}</span>
+
+                                <div class="card card-custom">
+                                    <!--begin::Header-->
+                                    <div class="card-header py-3">
+                                        <div class="card-title align-items-start flex-column">
+                                            <h3 class="card-label font-weight-bolder text-dark">{{__('dashboard.Edit order')}}</h3>
+                                            <span
+                                                class="text-muted font-weight-bold font-size-sm mt-1">{{__('dashboard.Edit Order data')}}</span>
+                                        </div>
+
                                     </div>
+                                    <!--end::Header-->
+                                    <!--begin::Form-->
+                                    <form class="form" action="{{route('orders-management.update',$order->id)}}"
+                                          method="post" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="card-body">
+                                            <!--begin::Heading-->
 
-                                </div>
-                                <!--end::Header-->
-                                <!--begin::Form-->
-                                <form class="form" action="{{route('orders-management.update',$order->id)}}" method="post" enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="card-body">
-                                        <!--begin::Heading-->
+                                            <!--begin::Form Group-->
 
-                                        <!--begin::Form Group-->
+                                            <div class="form-group row">
+                                                <label
+                                                    class="col-xl-3 col-lg-3 col-form-label">{{__('dashboard.distance')}}</label>
+                                                <div class="col-lg-9 col-xl-6">
 
-                                        <div class="form-group row">
-                                            <label class="col-xl-3 col-lg-3 col-form-label">{{__('dashboard.distance')}}</label>
-                                            <div class="col-lg-9 col-xl-6">
-
-{{--                                                <input class="form-control form-control-lg form-control-solid" id="distance" type="number" placeholder="{{__('dashboard.distance')}}" name="distance" />--}}
-                                                <select name="distance" id="distance"  class="form-control digits" >
-                                                    @for ($i=1;$i<=100;$i++){
+                                                    {{--                                                <input class="form-control form-control-lg form-control-solid" id="distance" type="number" placeholder="{{__('dashboard.distance')}}" name="distance" />--}}
+                                                    <select name="distance" id="distance" class="form-control digits">
+                                                        @for ($i=1;$i<=100;$i++){
                                                         <option value="{{$i}}">{{$i}}</option>
-                                                    @endfor
-                                                </select>
+                                                        @endfor
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div class="form-group row">
-                                            <label class="col-xl-3 col-lg-3 col-form-label">{{__('dashboard.Select technician')}}</label>
-                                            <div class="col-lg-9 col-xl-9">
-                                                <select name="provider_id" id="provider_id" class="form-control form-control-lg form-control-solid">
-                                                    @foreach($providers as $provider)
-                                                        <option value="{{$provider->id}}">{{$provider->name}}</option>
-                                                    @endforeach
-                                                </select>
+                                            <div class="form-group row">
+                                                <label
+                                                    class="col-xl-3 col-lg-3 col-form-label">{{__('dashboard.Select technician')}}</label>
+                                                <div class="col-lg-9 col-xl-9">
+                                                    <select name="provider_id" id="provider_id"
+                                                            class="form-control form-control-lg form-control-solid">
+                                                        @foreach($providers as $provider)
+                                                            <option
+                                                                value="{{$provider->id}}">{{$provider->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <button type="submit" class="btn btn-success mr-2">{{__('dashboard.save')}}</button>
+                                            <button type="submit"
+                                                    class="btn btn-success mr-2">{{__('dashboard.save')}}</button>
 
-                                    </div>
-                                </form>
-                                <!--end::Form-->
-                            </div>
-                            <!--end::Card-->
+                                        </div>
+                                    </form>
+                                    <!--end::Form-->
+                                </div>
+
+                        <!--end::Card-->
                         </div>
                         <!--end::Content-->
                     </div>
@@ -390,36 +413,36 @@
             </div>
             <!--end::Entry-->
         </div>
-@endsection
+        @endsection
         @section('myjsfile')
 
             <script>
-                $(document).on('change', '#distance', function(){
+                $(document).on('change', '#distance', function () {
                     var distance = $(this).val();
                     //alert(company_id);
-                    if(distance){
+                    if (distance) {
                         $.ajax({
-                            type:"GET",
+                            type: "GET",
                             // url:"{{url('get-distance-providers/')}}/?category_id="+category_id,
-                            url:"/get-distance-providers/"+distance+"/"+{{$order->id}},
-                            success:function(res){
+                            url: "/get-distance-providers/" + distance + "/" + {{$order->id}},
+                            success: function (res) {
                                 console.log(res);
 
-                                if(res){
+                                if (res) {
                                     console.log(res);
                                     $("#provider_id").empty();
-                                    $.each(res,function(key,value){
-                                        $("#provider_id").append('<option value="'+value+'" >'+key+'</option>');
+                                    $.each(res, function (key, value) {
+                                        $("#provider_id").append('<option value="' + value + '" >' + key + '</option>');
                                     });
                                 }
-                                if(res.length === 0){
+                                if (res.length === 0) {
                                     // $("#provider_id").empty();
-                                    $("#provider_id").append('<option>'+'no data found'+'</option>');
+                                    $("#provider_id").append('<option>' + 'no data found' + '</option>');
                                 }
                             }
                         });
-                    }else{
-                        $("#provider_id").append('<option>'+'no data found'+'</option>');
+                    } else {
+                        $("#provider_id").append('<option>' + 'no data found' + '</option>');
                     }
                 });
 

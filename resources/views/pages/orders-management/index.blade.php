@@ -9,19 +9,21 @@
                     <!--begin::Page Heading-->
                     <div class="d-flex align-items-baseline flex-wrap mr-5">
                         <!--begin::Page Title-->
-                        <h5 class="text-dark font-weight-bold my-1 mr-5">{{__('dashboard.Orders')}}</h5>
+                        <h5 class="text-dark font-weight-bold my-1 mr-5">{{__('dashboard.orders management')}}</h5>
                         <!--end::Page Title-->
                         <!--begin::Breadcrumb-->
                         <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
 
                             <li class="breadcrumb-item text-muted">
                                 @can('dashboard.index')
-                                    <a href="{{route('dashboard.index')}}" class="text-muted">{{__('dashboard.Dashboard')}}</a>
+                                    <a href="{{route('dashboard.index')}}"
+                                       class="text-muted">{{__('dashboard.Dashboard')}}</a>
                                 @endcan
                             </li>
                             <li class="breadcrumb-item text-muted">
-                                @can('orders.index')
-                                <a href="{{route('orders.index')}}" class="text-muted">{{__('dashboard.Orders')}}</a>
+                                @can('orders-management.index')
+                                    <a href="{{route('orders-management.index')}}"
+                                       class="text-muted">{{__('dashboard.orders management')}}</a>
                                 @endcan
                             </li>
                         </ul>
@@ -46,25 +48,30 @@
 											<span class="card-icon">
 												<i class="flaticon2-favourite text-primary"></i>
 											</span>
-                            <h3 class="card-label">{{__('dashboard.Orders Data')}}</h3>
+                            <h3 class="card-label">{{__('dashboard.orders management Data')}}</h3>
                         </div>
 
 
                         <div class="card-toolbar">
                             <!--begin::Dropdown-->
                             <div class="dropdown dropdown-inline mr-2">
-                                <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="la la-download"></i>{{__('dashboard.Export')}}</button>
                                 <!--begin::Dropdown Menu-->
                                 <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
                                     <ul class="nav flex-column nav-hover">
-                                        <li class="nav-header font-weight-bolder text-uppercase text-primary pb-2">{{__('dashboard.Choose an option')}}:</li>
+                                        <li class="nav-header font-weight-bolder text-uppercase text-primary pb-2">{{__('dashboard.Choose an option')}}
+                                            :
+                                        </li>
 
                                         <li class="nav-item">
-                                            <a href="{{route('orders.export')}}" class="nav-link">
-                                                <i class="nav-icon la la-file-excel-o"></i>
-                                                <span class="nav-text">{{__('dashboard.Excel')}}</span>
-                                            </a>
+                                            @can('orders-management.export')
+                                                <a href="{{route('orders-management.export')}}" class="nav-link">
+                                                    <i class="nav-icon la la-file-excel-o"></i>
+                                                    <span class="nav-text">{{__('dashboard.Excel')}}</span>
+                                                </a>                                            @endcan
+
                                         </li>
                                     </ul>
                                 </div>
@@ -73,25 +80,35 @@
                             <!--end::Dropdown-->
                             <!--begin::Button-->
                             {{--    Sharaqi   --}}
-                            <form action="{{route('orders.all.delete')}}" method="post" style="margin-left: 10px">
+                            @can('orders-management.all.delete')
+                            <form action="{{route('orders-management.all.delete')}}" method="post"
+                                  style="margin-left: 10px">
                                 @csrf
-                                <input id='deleteOrdersBtn' type="submit" class="btn btn-primary mr-2" value="delete all orders" disabled />
+                                <input id='deleteOrdersBtn' type="submit" class="btn btn-primary mr-2"
+                                       value="delete all orders" disabled/>
 
                             </form>
+                        @endcan
+
                             <!--end::Button-->
                         </div>
                     </div>
                     <div class="card-body">
                         <!--begin: Datatable-->
-                        <table class="table table-bordered table-hover table-responsive" id="myTable" style="margin-top: 13px !important">
+                        <table class="table table-bordered table-hover table-responsive" id="myTable"
+                               style="margin-top: 13px !important">
                             <thead>
                             <tr>
+                                @can('orders-management.all.delete')
                                 <th>
                                     <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                        <input onclick="handleCkhk()" type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" id="mainCh"/>
+                                        <input onclick="handleCkhk()" type="checkbox" class="group-checkable"
+                                               data-set="#sample_1 .checkboxes" id="mainCh"/>
                                         <span></span>
                                     </label>
                                 </th>
+                                @endcan
+
                                 <th>#</th>
                                 <th>{{__('dashboard.User')}}</th>
                                 <th>{{__('dashboard.provider')}}</th>
@@ -119,7 +136,7 @@
 @endsection
 @section('myjsfile')
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             var ajaxUrl = "orders-management";
             var data = [
                 {data: "select", "searchable": false, "orderable": false},
@@ -132,7 +149,7 @@
                 {data: 'created_at'},
                 {data: 'control'},
             ];
-            _DataTableHandler(ajaxUrl,data);
+            _DataTableHandler(ajaxUrl, data);
         });
     </script>
     <script>
@@ -159,12 +176,12 @@
     <script>
         var x = [];
         var handleCkhk = () => {
-            if(document.getElementById('mainCh').checked){
+            if (document.getElementById('mainCh').checked) {
                 @foreach($orders as $order)
                 document.getElementById({{$order}} + 'ch').checked = true;
                 @endforeach
                 document.getElementById('deleteOrdersBtn').disabled = false;
-            }else{
+            } else {
                 @foreach($orders as $order)
                 document.getElementById({{$order}} + 'ch').checked = false;
                 @endforeach

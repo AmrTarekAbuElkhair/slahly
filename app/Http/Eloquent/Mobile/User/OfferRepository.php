@@ -21,10 +21,9 @@ class OfferRepository implements OfferRepositoryInterface
     }
     public function getOffers($lang)
     {
-        $getWorkersOffers=ProviderOffer::where('worker_id','!=',null)->pluck('offer_id');
-        $moffers = Offer::whereIn('id',$getWorkersOffers)->where('status','1')->
-        where('package_id','!=',null)->
-        get();
+        $providers=User::where('type_id','1')->pluck('id');
+        $getWorkersOffers=ProviderOffer::whereIn('provider_id',$providers)->pluck('offer_id');
+        $moffers = Offer::whereIn('id',$getWorkersOffers)->whereNull('package_id')->where('status','1')->get();
         $allmoffers = array();
         $i = 0;
         foreach ($moffers as $moffer) {
@@ -39,10 +38,9 @@ class OfferRepository implements OfferRepositoryInterface
             $i++;
         }
 
-        $getCompaniesOffers=ProviderOffer::where('company_id','!=',null)->pluck('offer_id');
-        $coffers = Offer::whereIn('id',$getCompaniesOffers)->where('status','1')
-            ->where('package_id','!=',null)
-            ->get();
+        $providers=User::where('type_id','2')->pluck('id');
+        $getCompaniesOffers=ProviderOffer::whereIn('provider_id',$providers)->pluck('offer_id');
+        $coffers = Offer::whereIn('id',$getCompaniesOffers)->whereNotNull('package_id')->where('status','1')->get();
         $allcoffers = array();
         $i = 0;
         foreach ($coffers as $coffer) {
@@ -67,10 +65,8 @@ class OfferRepository implements OfferRepositoryInterface
 
     public function offerData($offer_id,$lang)
     {
-        $getc=ProviderOffer::where('offer_id',$offer_id)->where('company_id','!=',null)->pluck('company_id');
-        $getp=ProviderOffer::where('offer_id',$offer_id)->where('worker_id','!=',null)->pluck('worker_id');
-        $providers=User::whereIn('id',$getc)
-            ->orWhereIn('id',$getp)
+        $getProvider=ProviderOffer::where('offer_id',$offer_id)->pluck('provider_id');
+        $providers=User::whereIn('id',$getProvider)
             ->select('id','name','image','rate')->get();
         $data=[
             'implementation_providers'=>$providers

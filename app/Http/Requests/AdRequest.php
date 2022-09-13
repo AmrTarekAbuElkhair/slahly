@@ -28,6 +28,7 @@ class AdRequest extends FormRequest
             'type'=>'required',
             'start_date'=>'required',
             'end_date'=>'required',
+            'addstype'=>'required',
         ];
     }
 }

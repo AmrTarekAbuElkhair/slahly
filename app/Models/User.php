@@ -65,6 +65,17 @@ class User extends Authenticatable
             return asset('media/users/user.png');
         }
     }
+
+    public function getMobileAttribute($value)
+    {
+//        if ($value) {
+//            return asset('media/users/'.$value);
+//        } else {
+//            return asset('media/users/user.png');
+//        }
+       return substr($value, 3,20);
+    }
+
     public function setImageAttribute($value)
     {
         if ($value)

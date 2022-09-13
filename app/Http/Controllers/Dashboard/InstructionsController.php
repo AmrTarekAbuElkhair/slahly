@@ -110,7 +110,7 @@ class InstructionsController extends Controller
         $instructions = Instruction::all();
         return DataTables::of($instructions)
             ->editColumn('text', function ($model) {
-                return $model->text;
+                return strip_tags($model->text);
             })
             ->editColumn('control', function ($model) {
                 $all  = '<p class="fControllers"><a data-toggle="tooltip" data-skin-class="tooltip-primary"  data-placement="top" href = "' . url('admin/instructions/' . $model->id . '/edit') . '"   class="btn btn-sm btn-outline-success controllerCustom"><i class="fas fa-edit"></i></a> ';

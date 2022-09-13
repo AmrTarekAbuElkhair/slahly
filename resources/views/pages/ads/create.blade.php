@@ -19,13 +19,19 @@
                         <!--begin::Breadcrumb-->
                         <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                             <li class="breadcrumb-item text-muted">
+                                @can('dashboard.index')
                                 <a href="{{route('dashboard.index')}}" class="text-muted">{{__('dashboard.Dashboard')}}</a>
+                                @endcan
                             </li>
                             <li class="breadcrumb-item text-muted">
+                                @can('ads.index')
                                 <a href="{{route('ads.index')}}" class="text-muted">{{__('dashboard.Advertisments')}}</a>
+                                @endcan
                             </li>
                             <li class="breadcrumb-item text-muted">
+                                @can('ads.create')
                                 <a href="" class="text-muted">{{__('dashboard.Create Advertisment')}}</a>
+                                @endcan
                             </li>
                         </ul>
                         <!--end::Breadcrumb-->
@@ -65,6 +71,18 @@
 
                                     <!--begin::Form Group-->
                                     <div class="form-group row">
+                                        <label
+                                            class="col-xl-3 col-lg-3 col-form-label">{{__('dashboard.type')}}</label>
+                                        <div class="col-lg-9 col-xl-9">
+                                            <select name="type" id="type"
+                                                    class="form-control form-control-lg form-control-solid">
+                                                <option value="0">{{__('dashboard.inside')}}</option>
+                                                <option value="1">{{__('dashboard.outside')}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
                                         <label class="col-xl-3 col-lg-3 col-form-label">{{__('dashboard.Image')}}</label>
                                         <div class="col-lg-9 col-xl-9">
                                             <div class="image-input image-input-outline" id="kt_image_1">
@@ -91,22 +109,22 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group row">
+                                    <div class="form-group row" style='display:none;' id='business'>
                                         <label class="col-xl-3 col-lg-3 col-form-label">{{__('dashboard.advertisment type')}}</label>
                                         <div class="col-lg-9 col-xl-9">
-                                            <select id="addstype" name="type" class="form-control form-control-lg form-control-solid">
+                                            <select id="addstype" name="addstype" class="form-control form-control-lg form-control-solid">
                                                 <option value="0" status="0" >{{__('dashboard.offer maintenance')}}</option>
                                                 <option value="1" status="1">{{__('dashboard.offer package')}}</option>
                                             </select>
                                         </div>
                                     </div>
 
-                                    <div id="offers" class="form-group row showOrHide">
+                                    <div id="offers" class="form-group row showOrHide" style="display: none">
                                         <label class="col-xl-3 col-lg-3 col-form-label">{{__('dashboard.Select offer')}}</label>
                                         <div class="col-lg-9 col-xl-9">
                                             <select name="offer_id" class="form-control form-control-lg form-control-solid">
                                                 @foreach(\App\Models\Offer::get() as $offer)
-                                                    <option value="{{$offer->id}}">{{$offer->service->name}}</option>
+                                                    <option value="{{$offer->id}}">@if(isset($offer->service->name)){{$offer->service->name}}@else{{$offer->package->name}}@endif</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -122,17 +140,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group row">
-                                        <label
-                                            class="col-xl-3 col-lg-3 col-form-label">{{__('dashboard.type')}}</label>
-                                        <div class="col-lg-9 col-xl-9">
-                                            <select name="type"
-                                                    class="form-control form-control-lg form-control-solid">
-                                                <option value="0">{{__('dashboard.inside')}}</option>
-                                                <option value="1">{{__('dashboard.outside')}}</option>
-                                            </select>
-                                        </div>
-                                    </div>
+
 
                                 </div>
                                     <button type="submit" class="btn btn-success mr-2">{{__('dashboard.save')}}</button>
@@ -155,7 +163,23 @@
 
 @section('myjsfile')
     <script>
-
+        $(document).ready(function(){
+            $('#type').on('change', function() {
+                if ( this.value == '0')
+                    //.....................^.......
+                {
+                    $("#business").show();
+                }
+                else
+                {
+                    $("#business").hide();
+                    $("#packages").css('display', 'none');
+                    $("#offers").css('display','none');
+                }
+            });
+        });
+    </script>
+    <script>
         $(document).ready(function(){
             $("#addstype").on('change',function(){
                 var addstype = $(this).val();
@@ -174,5 +198,7 @@
 
         });
     </script>
+
+
 
 @endsection

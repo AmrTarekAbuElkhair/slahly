@@ -22,4 +22,13 @@ class Package extends Model
             return $default_image;
         }
     }
+    public function setImageAttribute($value)
+    {
+        if ($value)
+        {
+            $imageName=time().'.'.$value->getClientOriginalExtension();
+            $value->move(public_path('media/packages/'),$imageName);
+            $this->attributes['image']=$imageName;
+        }
+    }
 }

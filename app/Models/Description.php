@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Description extends Model
 {
-    use HasFactory;
+    use HasFactory,Translatable;
     protected $table='descriptions';
     protected $fillable=['package_id','service_id'];
     public $translatedAttributes =  ['text'];
@@ -16,7 +17,11 @@ class Description extends Model
 
     public function package()
     {
-        return $this->belongsTo(package::class,'pacckage_id','id');
+        return $this->belongsTo(Package::class,'package_id','id');
+    }
+    public function service()
+    {
+        return $this->belongsTo(Service::class,'service_id','id');
     }
     public function getServiceNameAttribute(){
         $lang=request()->header('Lang') ? request()->header('Lang') : 'en';

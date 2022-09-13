@@ -15,10 +15,14 @@
                         <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
 
                             <li class="breadcrumb-item text-muted">
+                                @can('dashboard.index')
                                 <a href="" class="text-muted">{{__('dashboard.Dashboard')}}</a>
+                                @endcan
                             </li>
                             <li class="breadcrumb-item text-muted">
+                                @can('admins.index')
                                 <a href="" class="text-muted">{{__('dashboard.Admins')}}</a>
+                                @endcan
                             </li>
                         </ul>
                         <!--end::Breadcrumb-->
@@ -47,8 +51,10 @@
                         <div class="card-toolbar">
 
                             <!--begin::Button-->
+                            @can('admins.create')
                             <a href="{{route('admins.create')}}" class="btn btn-primary font-weight-bolder">
                                 <i class="la la-plus"></i>{{__('dashboard.New Record')}}</a>
+                        @endcan
                             <!--end::Button-->
                         </div>
                     </div>

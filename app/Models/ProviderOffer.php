@@ -9,17 +9,13 @@ class ProviderOffer extends Model
 {
     use HasFactory;
     protected $table='provider_offers';
-    protected $fillable=['offer_id','company_id','worker_id'];
+    protected $fillable=['offer_id','provider_id'];
     public function offer()
     {
         return $this->belongsTo(Offer::class,'offer_id','id');
     }
-    public function user()
+    public function provider()
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
-    }
-    public function worker()
-    {
-        return $this->belongsTo(User::class, 'worker_id', 'id');
+        return $this->belongsTo(User::class, 'provider_id', 'id');
     }
 }
