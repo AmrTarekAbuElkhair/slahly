@@ -16,12 +16,10 @@ class CreateProviderOffersTable extends Migration
         Schema::create('provider_offers', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('offer_id')->unsigned();
-            $table->bigInteger('company_id')->unsigned()->nullable();
-            $table->bigInteger('worker_id')->unsigned()->nullable();
+            $table->bigInteger('provider_id')->unsigned()->nullable();
             $table->timestamps();
             $table->foreign('offer_id')->references('id')->on('offers')->onDelete('cascade');
-            $table->foreign('company_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('worker_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('provider_id')->references('id')->on('users')->onDelete('cascade');
 
         });
     }

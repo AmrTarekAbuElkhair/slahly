@@ -15,7 +15,7 @@ class CreateOffersTable extends Migration
     {
         Schema::create('offers', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('service_id')->unsigned();
+            $table->bigInteger('service_id')->unsigned()->nullable();
             $table->bigInteger('package_id')->unsigned()->nullable();
             $table->string('percentage');
             $table->string('image');

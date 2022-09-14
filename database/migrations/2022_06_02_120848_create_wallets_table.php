@@ -21,7 +21,7 @@ class CreateWalletsTable extends Migration
             $table->tinyInteger('status')
                 ->comment('0 =>pending, 1 => accepted, 2 => rejected');
             $table->tinyInteger('type')
-                ->comment('0 =>withdraw, 1 => charging');
+                ->comment('0 =>withdraw, 1 => charging, 2=> added to wallet');
             $table->double('price');
             $table->string('op_number');
             $table->string('account_number')->nullable();

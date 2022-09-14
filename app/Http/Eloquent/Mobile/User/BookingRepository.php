@@ -550,6 +550,14 @@ class BookingRepository implements BookingRepositoryInterface
                 'price'=>$amount
             ]);
         }
+        Wallet::create([
+            'worker_id'=>$order->provider_id,
+            'title_id'=>3,
+            'type'=>2,
+            'status'=>1,
+            'op_number'=>rand(pow(10, 9-1), pow(10, 9)-1),
+            'price'=>$amount
+        ]);
         User::where('id',$order->provider_id)->update(['available'=>1]);
     }
 }
