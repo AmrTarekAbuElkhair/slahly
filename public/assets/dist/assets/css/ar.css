@@ -1,0 +1,97 @@
+body {
+    direction: rtl
+}
+
+#kt_scrolltop{
+    right: unset;
+    left: 20px !important
+}
+
+.aside-enabled.subheader-fixed .subheader h5 {
+    margin-right: 0 !important;
+    margin-left: 1.25rem;
+}
+
+.aside-fixed .aside {
+    right: 0;
+    text-align: right
+}
+
+@media (min-width: 992px){
+    
+    .aside-enabled .header.header-fixed {
+        right: 265px;
+        left: 0
+    }
+
+    .topbar { margin-left: auto }
+
+    .aside-enabled.subheader-fixed .subheader {
+        right: 265px;
+        left: 0
+    }
+    
+    .aside-fixed .wrapper {
+        padding-right: 265px;
+        padding-left: 0
+    }
+}
+
+@media (max-width: 991px){
+.aside-fixed .wrapper {
+    padding-left: 0;
+    padding-right: 250px;
+}
+.aside-fixed .wrapper {
+    padding-left: 0;
+    padding-right: 60px;
+}
+
+.aside-fixed.aside-minimize:not(.aside-minimize-hover) .wrapper {
+    padding-left: 0;
+}
+}
+
+/* admins */
+div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+    justify-content: flex-start;
+    direction: ltr;
+    text-align: left;
+}
+
+div.dataTables_wrapper div.dataTables_info { text-align: right }
+
+/* Users  */
+.dropdown.dropdown-inline.mr-2 {
+    margin-right: 0 !important;
+    margin-left: 10px;
+}
+
+.btn.btn-primary.disabled, .btn.btn-primary:disabled {
+    margin-right: 10px !important;
+}
+
+table.table-bordered.dataTable {
+    border-right-width: 0;
+    text-align: right
+}
+
+.controllerCustom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn.btn-sm i, .btn-group-sm > .btn i {
+    font-size: 1.3rem;
+    padding-right: 0;
+}
+
+/* Settings */
+.custAr {
+    text-align:right
+}
+
+.custAr .card-title.align-items-start.flex-column, .custAr .card-title.align-items-start.flex-column h3 {
+    margin-right: 0 !important;
+}
