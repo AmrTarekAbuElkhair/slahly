@@ -1,3 +1,26 @@
+<div align="center">
+
+# [Contributors](https://github.com/AmrTarekAbuElkhair/slahly/graphs/contributors)
+
+<table>
+  <td>
+    <a href="https://github.com/EngSharaqi">
+      <img src="https://avatars.githubusercontent.com/u/43757466?v=4" width="300">
+      <h3>Mohamed A. Sharaqi</h3>
+      <p>Frontend Engineer</p>
+    </a>
+  </td>
+  <td>
+    <a href="https://github.com/AmrTarekAbuElkhair">
+      <img src="https://github.com/AmrTarekAbuElkhair/slahly/blob/master/images/Amrtarek.jpg" width="300">
+      <h3>Amr T. Abu Elkhair</h3>
+      <p>Backend Engineer</p>
+    </a>
+  </td>
+</table>
+</div>
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
