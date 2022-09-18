@@ -4326,4 +4326,12 @@ return[
     'one provider'=>'مقدم خدمة',
     'all providers'=>'جميع مقدمي الخدمة',
     'Statistics'=>'الاحصائيات',
+    'users privacy In Arabic'=>'اتفاقية الخصوصية للمستخدمين بالعربي',
+    'users privacy In English'=>'اتفاقية الخصوصية للمستخدمين بالانجليزية',
+    'providers privacy In Arabic'=>'اتفاقية الخصوصية للفنيين بالعربي',
+    'providers privacy In English'=>'اتفاقية الخصوصية للفنيين بالانجليزية',
+    'delete all users'=>'حذف كل السمتخدمين',
+    'delete all providers'=>'حذف كل الفنيين',
+
+
 ];

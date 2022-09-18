@@ -71,10 +71,19 @@
 
                                     <!--begin::Form Group-->
                                     <div class="form-group row">
-                                        <label class="col-xl-3 col-lg-3 col-form-label">{{__('dashboard.Name')}}</label>
+                                        <label class="col-xl-3 col-lg-3 col-form-label">{{__('dashboard.Name AR')}}</label>
                                         <div class="col-lg-9 col-xl-6">
 
-                                            <input class="form-control form-control-lg form-control-solid" type="text" placeholder="{{__('dashboard.Name')}}" name="name" value="{{$role->name}}"/>
+                                            <input class="form-control form-control-lg form-control-solid" type="text" placeholder="{{__('dashboard.Name AR')}}" name="name_ar" value="{{$role->name_ar}}"/>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">{{__('dashboard.Name EN')}}</label>
+                                        <div class="col-lg-9 col-xl-6">
+
+                                            <input class="form-control form-control-lg form-control-solid" type="text" placeholder="{{__('dashboard.Name EN')}}" name="name_en" value="{{$role->name_en}}"/>
 
                                         </div>
                                     </div>

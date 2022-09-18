@@ -23,7 +23,8 @@ Route::group(['middleware' => ['localization'],'prefix' => 'mobile'], function (
         Route::get('/loginterms','App\Http\Controllers\Apis\Mobile\SettingsController@getLoginTerms');
         Route::get('/about', 'App\Http\Controllers\Apis\Mobile\SettingsController@getAboutUs');
         Route::get('/terms','App\Http\Controllers\Apis\Mobile\SettingsController@getTerms');
-        Route::get('/privacy','App\Http\Controllers\Apis\Mobile\SettingsController@getPrivacy');
+        Route::get('/users/privacy','App\Http\Controllers\Apis\Mobile\SettingsController@getUserPrivacy');
+        Route::get('/providers/privacy','App\Http\Controllers\Apis\Mobile\SettingsController@getProviderPrivacy');
         Route::get('/socialmedia','App\Http\Controllers\Apis\Mobile\SettingsController@getSocialMedia');
         Route::get('/getreasons','App\Http\Controllers\Apis\Mobile\SettingsController@getReasons');
         Route::get('/getservices','App\Http\Controllers\Apis\Mobile\SettingsController@getServices');

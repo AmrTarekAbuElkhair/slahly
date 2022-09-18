@@ -87,7 +87,7 @@
                             <form action="{{route('providers.all.delete')}}" method="post" style="margin-left: 10px">
                                 @csrf
                                 <input id='deleteProvidersBtn' type="submit" class="btn btn-primary mr-2"
-                                       value="delete all providers" disabled/>
+                                       value="{{__('dashboard.delete all providers')}}" disabled/>
 
                             </form>
                         @endcan

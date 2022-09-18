@@ -179,7 +179,7 @@
                                                     class="form-control form-control-lg form-control-solid">
                                                 @foreach(\App\Models\Offer::get() as $offer)
                                                     <option
-                                                        value="{{$offer->id}}">{{$offer->service->name}} - {{$offer->package->name}}</option>
+                                                        value="{{$offer->id}}">@if(isset($offer->service_id)){{$offer->service->name}}@endif - @if(isset($offer->package_id)){{$offer->package->name}}@endif</option>
                                                 @endforeach
                                             </select>
                                         </div>

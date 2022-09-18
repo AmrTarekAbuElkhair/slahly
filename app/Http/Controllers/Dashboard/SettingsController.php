@@ -93,13 +93,15 @@ class SettingsController extends Controller
                 'desc' => $request->input('en.desc'),
                 'terms'=> $request->input('en.terms'),
                 'about'=> $request->input('en.about'),
-                'privacy'=> $request->input('en.privacy'),
+                'privacy_users'=> $request->input('en.privacy_users'),
+                'privacy_providers'=> $request->input('en.privacy_providers'),
             ],
             'ar' => [
                 'desc' => $request->input('ar.desc'),
                 'terms'=> $request->input('ar.terms'),
                 'about'=> $request->input('ar.about'),
-                'privacy'=> $request->input('ar.privacy'),
+                'privacy_users'=> $request->input('ar.privacy_users'),
+                'privacy_providers'=> $request->input('ar.privacy_providers'),
             ],
         ];
         $settings->update($data);

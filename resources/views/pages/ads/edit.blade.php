@@ -139,7 +139,23 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">{{__('dashboard.start_date')}}</label>
+                                        <div class="col-lg-9 col-xl-6">
 
+                                            <input class="form-control form-control-lg form-control-solid" type="date" placeholder="{{__('dashboard.start_date')}}" name="start_date" value="{{$ad->start_date}}"/>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">{{__('dashboard.end_date')}}</label>
+                                        <div class="col-lg-9 col-xl-6">
+
+                                            <input class="form-control form-control-lg form-control-solid" type="date" placeholder="{{__('dashboard.end_date')}}" name="end_date" value="{{$ad->end_date}}"/>
+
+                                        </div>
+                                    </div>
                                     <div class="form-group row">
                                         <label class="col-xl-3 col-lg-3 col-form-label">{{__('dashboard.status')}}</label>
                                         <div class="col-lg-9 col-xl-9">

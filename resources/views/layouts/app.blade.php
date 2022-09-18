@@ -41,6 +41,13 @@ License: You must have a valid license purchased only from themeforest(the above
           type="text/css"/>
     <link href="{{ asset('assets/dist/assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css"/>
 
+@if(Session::get('lang') == 'en')
+        <link href="{{ asset('assets/dist/assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css"/>
+
+    @else
+        <link href="{{ asset('assets/dist/assets/css/ar.css') }}" rel="stylesheet" type="text/css"/>
+
+    @endif
     <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">-->
 
 
@@ -116,6 +123,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     <ul class="menu-nav">
                         @can('dashboard.index')
                             <li class="menu-item menu-item-submenu {{ Request::is('admin/dashboard*') ? 'active': '' }}"
+                                style="{{ Request::is('admin/dashboard*') ? 'background-color:#C5CEE0': '' }}"
                                 aria-haspopup="true">
                                 <a href="{{route('dashboard.index')}}" class="menu-link">
 										<span class="svg-icon menu-icon">
@@ -130,6 +138,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
                         @can('admins.index')
                             <li class="menu-item menu-item-submenu {{ Request::is('admin/admins*') ? 'active': '' }}"
+                                style="{{ Request::is('admin/admins*') ? 'background-color:#C5CEE0': '' }}"
                                 aria-haspopup="true">
                                 <a href="{{route('admins.index')}}" class="menu-link menu-toggle">
 										<span class="svg-icon menu-icon">
@@ -142,7 +151,9 @@ License: You must have a valid license purchased only from themeforest(the above
                             </li>
                         @endcan
                         @can('roles.index')
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true">
+                            <li class="menu-item menu-item-submenu {{ Request::is('admin/roles*') ? 'active': '' }}"
+                                style="{{ Request::is('admin/roles*') ? 'background-color:#C5CEE0': '' }}"
+                                aria-haspopup="true">
                                 <a href="{{route('roles.index')}}" class="menu-link menu-toggle">
 										<span class="svg-icon menu-icon">
 											<!--begin::Svg Icon | path:{{ asset('assets/dist/assets/media/svg/icons/General/User.svg') }}-->
@@ -154,7 +165,9 @@ License: You must have a valid license purchased only from themeforest(the above
                             </li>
                         @endcan
                         @can('users.index')
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true">
+                            <li class="menu-item menu-item-submenu {{ Request::is('admin/users*') ? 'active': '' }}"
+                                style="{{ Request::is('admin/users*') ? 'background-color:#C5CEE0': '' }}"
+                                aria-haspopup="true">
                                 <a href="{{route('users.index')}}" class="menu-link menu-toggle">
 										<span class="svg-icon menu-icon">
 											<!--begin::Svg Icon | path:{{ asset('assets/dist/assets/media/svg/icons/General/User.svg') }}-->
@@ -166,7 +179,9 @@ License: You must have a valid license purchased only from themeforest(the above
                             </li>
                         @endcan
                         @can('providers.index')
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true">
+                            <li class="menu-item menu-item-submenu {{ Request::is('admin/providers*') ? 'active': '' }}"
+                                style="{{ Request::is('admin/providers*') ? 'background-color:#C5CEE0': '' }}"
+                                aria-haspopup="true">
                                 <a href="{{route('providers.index')}}" class="menu-link menu-toggle">
 										<span class="svg-icon menu-icon">
 											<!--begin::Svg Icon | path:{{ asset('assets/dist/assets/media/svg/icons/General/User.svg') }}-->
@@ -178,7 +193,9 @@ License: You must have a valid license purchased only from themeforest(the above
                             </li>
                         @endcan
                         @can('ads.index')
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true">
+                            <li class="menu-item menu-item-submenu {{ Request::is('admin/ads*') ? 'active': '' }}"
+                                style="{{ Request::is('admin/ads*') ? 'background-color:#C5CEE0': '' }}"
+                                aria-haspopup="true">
                                 <a href="{{route('ads.index')}}" class="menu-link menu-toggle">
 										<span class="svg-icon menu-icon">
 											<!--begin::Svg Icon | path:{{ asset('assets/dist/assets/media/svg/icons/General/User.svg') }}-->
@@ -191,7 +208,9 @@ License: You must have a valid license purchased only from themeforest(the above
                             </li>
                         @endcan
                         @can('countries.index')
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true">
+                            <li class="menu-item menu-item-submenu {{ Request::is('admin/countries*') ? 'active': '' }}"
+                                style="{{ Request::is('admin/countries*') ? 'background-color:#C5CEE0': '' }}"
+                                aria-haspopup="true">
                                 <a href="{{route('countries.index')}}" class="menu-link menu-toggle">
 										<span class="svg-icon menu-icon">
 											<!--begin::Svg Icon | path:{{ asset('assets/dist/assets/media/svg/icons/General/User.svg') }}-->
@@ -203,7 +222,9 @@ License: You must have a valid license purchased only from themeforest(the above
                             </li>
                         @endcan
                         @can('instructions.index')
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true">
+                            <li class="menu-item menu-item-submenu {{ Request::is('admin/instructions*') ? 'active': '' }}"
+                                style="{{ Request::is('admin/instructions*') ? 'background-color:#C5CEE0': '' }}"
+                                aria-haspopup="true">
                                 <a href="{{route('instructions.index')}}" class="menu-link menu-toggle">
 										<span class="svg-icon menu-icon">
 											<!--begin::Svg Icon | path:{{ asset('assets/dist/assets/media/svg/icons/General/User.svg') }}-->
@@ -215,7 +236,9 @@ License: You must have a valid license purchased only from themeforest(the above
                             </li>
                         @endcan
                         @can('reasons.index')
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true">
+                            <li class="menu-item menu-item-submenu {{ Request::is('admin/reasons*') ? 'active': '' }}"
+                                style="{{ Request::is('admin/reasons*') ? 'background-color:#C5CEE0': '' }}"
+                                aria-haspopup="true">
                                 <a href="{{route('reasons.index')}}" class="menu-link menu-toggle">
 										<span class="svg-icon menu-icon">
 											<!--begin::Svg Icon | path:{{ asset('assets/dist/assets/media/svg/icons/General/User.svg') }}-->
@@ -227,7 +250,9 @@ License: You must have a valid license purchased only from themeforest(the above
                             </li>
                         @endcan
                         @can('services.index')
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true">
+                            <li class="menu-item menu-item-submenu {{ Request::is('admin/services*') ? 'active': '' }}"
+                                style="{{ Request::is('admin/services*') ? 'background-color:#C5CEE0': '' }}"
+                                aria-haspopup="true">
                                 <a href="{{route('services.index')}}" class="menu-link menu-toggle">
 										<span class="svg-icon menu-icon">
 											<!--begin::Svg Icon | path:{{ asset('assets/dist/assets/media/svg/icons/General/User.svg') }}-->
@@ -239,7 +264,9 @@ License: You must have a valid license purchased only from themeforest(the above
                             </li>
                         @endcan
                         @can('packages.index')
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true">
+                            <li class="menu-item menu-item-submenu {{ Request::is('admin/packages*') ? 'active': '' }}"
+                                style="{{ Request::is('admin/packages*') ? 'background-color:#C5CEE0': '' }}"
+                                aria-haspopup="true">
                                 <a href="{{route('packages.index')}}" class="menu-link menu-toggle">
 										<span class="svg-icon menu-icon">
 											<!--begin::Svg Icon | path:{{ asset('assets/dist/assets/media/svg/icons/General/User.svg') }}-->
@@ -253,7 +280,9 @@ License: You must have a valid license purchased only from themeforest(the above
                         @endcan
 
                             @can('packages-services.index')
-                                <li class="menu-item menu-item-submenu" aria-haspopup="true">
+                                <li class="menu-item menu-item-submenu {{ Request::is('admin/packages-services*') ? 'active': '' }}"
+                                    style="{{ Request::is('admin/packages-services*') ? 'background-color:#C5CEE0': '' }}"
+                                    aria-haspopup="true">
                                     <a href="{{route('packages-services.index')}}" class="menu-link menu-toggle">
 										<span class="svg-icon menu-icon">
 											<!--begin::Svg Icon | path:{{ asset('assets/dist/assets/media/svg/icons/General/User.svg') }}-->
@@ -268,7 +297,9 @@ License: You must have a valid license purchased only from themeforest(the above
 
 
                         @can('offers.index')
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true">
+                            <li class="menu-item menu-item-submenu {{ Request::is('admin/offers*') ? 'active': '' }}"
+                                style="{{ Request::is('admin/offers*') ? 'background-color:#C5CEE0': '' }}"
+                                aria-haspopup="true">
                                 <a href="{{route('offers.index')}}" class="menu-link menu-toggle">
 										<span class="svg-icon menu-icon">
 											<!--begin::Svg Icon | path:{{ asset('assets/dist/assets/media/svg/icons/General/User.svg') }}-->
@@ -281,7 +312,9 @@ License: You must have a valid license purchased only from themeforest(the above
                             </li>
                         @endcan
                         @can('orders.index')
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true">
+                            <li class="menu-item menu-item-submenu {{ Request::is('admin/orders*') ? 'active': '' }}"
+                                style="{{ Request::is('admin/orders*') ? 'background-color:#C5CEE0': '' }}"
+                                aria-haspopup="true">
                                 <a href="{{route('orders.index')}}" class="menu-link menu-toggle">
 										<span class="svg-icon menu-icon">
 											<!--begin::Svg Icon | path:{{ asset('assets/dist/assets/media/svg/icons/General/User.svg') }}-->
@@ -298,7 +331,9 @@ License: You must have a valid license purchased only from themeforest(the above
                             </li>
                         @endcan
                         @can('orders.index')
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true">
+                            <li class="menu-item menu-item-submenu {{ Request::is('admin/orders-management*') ? 'active': '' }}"
+                                style="{{ Request::is('admin/orders-management*') ? 'background-color:#C5CEE0': '' }}"
+                                aria-haspopup="true">
                                 <a href="{{route('orders-management.index')}}" class="menu-link menu-toggle">
 										<span class="svg-icon menu-icon">
 											<!--begin::Svg Icon | path:{{ asset('assets/dist/assets/media/svg/icons/General/User.svg') }}-->
@@ -316,7 +351,9 @@ License: You must have a valid license purchased only from themeforest(the above
                             </li>
                         @endcan
                         @can('notifications.index')
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true">
+                            <li class="menu-item menu-item-submenu {{ Request::is('admin/notifications*') ? 'active': '' }}"
+                                style="{{ Request::is('admin/notifications*') ? 'background-color:#C5CEE0': '' }}"
+                                aria-haspopup="true">
                                 <a href="{{route('notifications.index')}}" class="menu-link menu-toggle">
 										<span class="svg-icon menu-icon">
 											<!--begin::Svg Icon | path:{{ asset('assets/dist/assets/media/svg/icons/General/User.svg') }}-->
@@ -329,7 +366,9 @@ License: You must have a valid license purchased only from themeforest(the above
                             </li>
                         @endcan
                         @can('contacts.index')
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true">
+                            <li class="menu-item menu-item-submenu {{ Request::is('admin/contacts*') ? 'active': '' }}"
+                                style="{{ Request::is('admin/contacts*') ? 'background-color:#C5CEE0': '' }}"
+                                aria-haspopup="true">
                                 <a href="{{route('contacts.index')}}" class="menu-link menu-toggle">
 										<span class="svg-icon menu-icon">
 											<!--begin::Svg Icon | path:{{ asset('assets/dist/assets/media/svg/icons/General/User.svg') }}-->
@@ -347,7 +386,9 @@ License: You must have a valid license purchased only from themeforest(the above
                             </li>
                         @endcan
                         @can('socials.index')
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true">
+                            <li class="menu-item menu-item-submenu {{ Request::is('admin/socials*') ? 'active': '' }}"
+                                style="{{ Request::is('admin/socials*') ? 'background-color:#C5CEE0': '' }}"
+                                aria-haspopup="true">
                                 <a href="{{route('socials.index')}}" class="menu-link menu-toggle">
 										<span class="svg-icon menu-icon">
 											<!--begin::Svg Icon | path:{{ asset('assets/dist/assets/media/svg/icons/General/User.svg') }}-->
@@ -360,7 +401,9 @@ License: You must have a valid license purchased only from themeforest(the above
                             </li>
                         @endcan
                         @can('settings.index')
-                            <li class="menu-item menu-item-submenu" aria-haspopup="true">
+                            <li class="menu-item menu-item-submenu {{ Request::is('admin/settings*') ? 'active': '' }}"
+                                style="{{ Request::is('admin/settings*') ? 'background-color:#C5CEE0': '' }}"
+                                aria-haspopup="true">
                                 <a href="{{route('settings.index')}}" class="menu-link menu-toggle">
 										<span class="svg-icon menu-icon">
 											<!--begin::Svg Icon | path:{{ asset('assets/dist/assets/media/svg/icons/General/User.svg') }}-->

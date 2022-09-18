@@ -40,9 +40,9 @@ License: You must have a valid license purchased only from themeforest(the above
     <link href="{{ asset('assets/dist/assets/css/themes/layout/aside/dark.css') }}" rel="stylesheet" type="text/css" />
     <!--end::Layout Themes-->
     @php
-        $settings=\App\Models\Setting::first()->logo;
+        $settings=\App\Models\Setting::find('1');
     @endphp
-    <link rel="shortcut icon" href="{{ asset($settings) }}" />
+    <link rel="shortcut icon" href="{{ asset($settings->logo) }}" />
 </head>
 <!--end::Head-->
 <!--begin::Body-->
@@ -56,7 +56,7 @@ License: You must have a valid license purchased only from themeforest(the above
                 <!--begin::Login Header-->
                 <div class="d-flex flex-center mb-15">
                     <a href="#">
-                        <img src="{{ asset($settings) }}" class="max-h-75px" alt="" style="width: 150px;"/>
+                        <img src="{{ asset($settings->logo) }}" class="max-h-75px" alt="" style="width: 150px;"/>
                     </a>
                 </div>
                 <!--end::Login Header-->

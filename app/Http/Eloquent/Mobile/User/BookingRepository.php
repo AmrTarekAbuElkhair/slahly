@@ -105,6 +105,7 @@ class BookingRepository implements BookingRepositoryInterface
         }
         $provider=User::where('id',$provider->id)->first();
         $evaluations=round(Evaluation::where('provider_id',$provider->id)->avg('user_rate'),2);
+        $price=WorkerPrice::where('worker_id',$provider->id)->first()->price;
         $data['provider_main_data'] = array(
             'id' => $provider->id,
             'name' => $provider->name,
@@ -114,7 +115,7 @@ class BookingRepository implements BookingRepositoryInterface
             'distance'=>floor($distance),
             'provider_type'=>$provider->type_id,
             'rate' => isset($evaluations)?$evaluations:0,
-            'price_hour' => WorkerPrice::where('worker_id',$provider->id)->first()->price,
+            'price_hour' => isset($price)?$price:0,
             'jobs' => Order::where('provider_id',$provider->id)->where('status','4')->count(),
             'service_id'=>$provider->service_id,
             'service_name'=>ServiceTranslation::where('service_id',$provider->service_id)->where('locale',$lang)->first()->name,

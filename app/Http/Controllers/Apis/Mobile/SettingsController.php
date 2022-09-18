@@ -33,11 +33,18 @@ class SettingsController extends Controller
     }
 
 
-    public function getPrivacy(Request $request)
+    public function getUserPrivacy(Request $request)
     {
         $lang = ($request->hasHeader('lang')) ? $request->header('lang') : 'en';
-        $result = $this->settingObject->getPrivacy($lang);
-        return response(res($lang, success(), 200, 'privacy_data', $result));
+        $result = $this->settingObject->getUserPrivacy($lang);
+        return response(res($lang, success(), 200, 'users_privacy_data', $result));
+    }
+
+    public function getProviderPrivacy(Request $request)
+    {
+        $lang = ($request->hasHeader('lang')) ? $request->header('lang') : 'en';
+        $result = $this->settingObject->getProviderPrivacy($lang);
+        return response(res($lang, success(), 200, 'providers_privacy_data', $result));
     }
 
     public function getSocialMedia(Request $request)

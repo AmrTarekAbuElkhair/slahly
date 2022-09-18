@@ -10,7 +10,7 @@ class Setting extends Model
 {
     use HasFactory,Translatable;
     protected $table = 'settings';
-    public $translatedAttributes =  ['desc','about','terms','privacy'];
+    public $translatedAttributes =  ['desc','about','terms','privacy_users','privacy_providers'];
     protected $fillable = [
         'logo', 'phone','email','address','youtube','whatsapp','help_phone','management_phone','default_image',
 		'android_version_user','android_version_provider','ios_version_user','ios_version_provider'];

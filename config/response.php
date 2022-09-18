@@ -326,10 +326,15 @@ return
             'en' => 'Filter data',
             'ar' => 'بيانات البحث '
         ],
-        'privacy_data' =>
+        'users_privacy_data' =>
             [
-                'en' => 'privacy',
-                'ar' => 'سياسة الخصوصية'
+                'en' => 'users privacy',
+                'ar' => 'سياسة الخصوصية للمستخدمين'
+            ],
+        'providers_privacy_data' =>
+            [
+                'en' => 'providers privacy',
+                'ar' => 'سياسة الخصوصية للفنيين'
             ],
         'provider_already_verified' =>
             [
@@ -486,5 +491,5 @@ return
            'en'=>'config',
            'ar'=>'الاعدادات'
         ],
-        
+
     ];

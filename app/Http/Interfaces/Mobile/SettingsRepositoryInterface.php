@@ -7,7 +7,9 @@ interface SettingsRepositoryInterface
 
     public function getTerms($lang);
 
-    public function getPrivacy($lang);
+    public function getUserPrivacy($lang);
+
+    public function getProviderPrivacy($lang);
 
     public function getSocialMedia();
 

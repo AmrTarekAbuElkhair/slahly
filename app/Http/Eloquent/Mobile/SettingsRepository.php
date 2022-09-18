@@ -31,10 +31,16 @@ class SettingsRepository implements SettingsRepositoryInterface
     }
 
 
-    public function getPrivacy($lang)
+    public function getUserPrivacy($lang)
     {
         $settings = Setting::find(1);
-            return array('text' =>$settings->getTranslation($lang)->privacy);
+            return array('text' =>$settings->getTranslation($lang)->privacy_users);
+    }
+
+    public function getProviderPrivacy($lang)
+    {
+        $settings = Setting::find(1);
+        return array('text' =>$settings->getTranslation($lang)->privacy_providers);
     }
 
     public function getSocialMedia()
@@ -140,7 +146,7 @@ class SettingsRepository implements SettingsRepositoryInterface
                     'title' => NotificationTranslation::where('notification_id',$notification->notification_id)->where('locale',$lang)->first()->title,
                     'desc' =>  NotificationTranslation::where('notification_id',$notification->notification_id)->where('locale',$lang)->first()->desc,
                     'type' => $notification->notification->type,
-                    'order_id'=>$notification->order_id,
+                    'order_id'=>$notification->order_id!=null?$notification->order_id:0,
                     'user_id'=>$userData->id,
                     'user_name'=>$userData->name,
                     'user_mobile'=>$userData->mobile,
@@ -169,7 +175,7 @@ class SettingsRepository implements SettingsRepositoryInterface
                     'title' => NotificationTranslation::where('notification_id',$notification->notification_id)->where('locale',$lang)->first()->title,
                     'desc' =>  NotificationTranslation::where('notification_id',$notification->notification_id)->where('locale',$lang)->first()->desc,
                     'type' => $notification->notification->type,
-                    'order_id'=>$notification->order_id,
+                    'order_id'=>$notification->order_id!=null?$notification->order_id:0,
                     'user_id'=>$notification->order->user_id,
                     'user_name'=>$notification->order->user->name,
                     'user_mobile'=>$notification->order->user->mobile,

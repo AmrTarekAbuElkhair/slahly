@@ -87,7 +87,7 @@
                                 <form action="{{route('users.all.delete')}}" method="post" style="margin-left: 10px">
                                     @csrf
                                     <input id='deleteUsersBtn' type="submit" class="btn btn-primary mr-2"
-                                           value="delete all users" disabled/>
+                                           value="{{__('dashboard.delete all users')}}" disabled/>
 
                                 </form>
                         @endcan

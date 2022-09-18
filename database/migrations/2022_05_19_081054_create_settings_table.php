@@ -37,7 +37,8 @@ class CreateSettingsTable extends Migration
             $table->text('desc');
             $table->text('about');
             $table->text('terms');
-            $table->text('privacy');
+            $table->text('privacy_users');
+            $table->text('privacy_providers');
             $table->unique(['setting_id', 'locale']);
             $table->foreign('setting_id')->references('id')->on('settings')->onDelete('cascade');
         });

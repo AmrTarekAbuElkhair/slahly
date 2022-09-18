@@ -265,21 +265,41 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="col-form-label col-lg-3 col-sm-12 text-right">{{__('dashboard.privacy In Arabic')}}</label>
+                                        <label class="col-form-label col-lg-3 col-sm-12 text-right">{{__('dashboard.users privacy In Arabic')}}</label>
                                         <div class="col-lg-7 col-md-9 col-sm-12">
 {{--                                            <textarea name="ar[privacy]" class="form-control" data-provide="markdown" rows="10">{{$settings->translate('ar')->privacy}}</textarea>--}}
 {{--                                            <span class="form-text text-muted">Enter some markdown content</span>--}}
-                                            <textarea class="ckeditor form-control" name="ar[privacy]">{{$settings->translate('ar')->privacy}}</textarea>
+                                            <textarea class="ckeditor form-control" name="ar[privacy_users]">{{$settings->translate('ar')->privacy_users}}</textarea>
 
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="col-form-label col-lg-3 col-sm-12 text-right">{{__('dashboard.privacy In English')}}</label>
+                                        <label class="col-form-label col-lg-3 col-sm-12 text-right">{{__('dashboard.users privacy In English')}}</label>
                                         <div class="col-lg-7 col-md-9 col-sm-12">
 {{--                                            <textarea name="en[privacy]" class="form-control" data-provide="markdown" rows="10">{{$settings->translate('en')->privacy}}</textarea>--}}
 {{--                                            <span class="form-text text-muted">Enter some markdown content</span>--}}
-                                            <textarea class="ckeditor form-control" name="ar[privacy]">{{$settings->translate('en')->privacy}}</textarea>
+                                            <textarea class="ckeditor form-control" name="en[privacy_users]">{{$settings->translate('en')->privacy_users}}</textarea>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-lg-3 col-sm-12 text-right">{{__('dashboard.providers privacy In Arabic')}}</label>
+                                        <div class="col-lg-7 col-md-9 col-sm-12">
+                                            {{--                                            <textarea name="ar[privacy]" class="form-control" data-provide="markdown" rows="10">{{$settings->translate('ar')->privacy}}</textarea>--}}
+                                            {{--                                            <span class="form-text text-muted">Enter some markdown content</span>--}}
+                                            <textarea class="ckeditor form-control" name="ar[privacy_providers]">{{$settings->translate('ar')->privacy_providers}}</textarea>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-lg-3 col-sm-12 text-right">{{__('dashboard.providers privacy In English')}}</label>
+                                        <div class="col-lg-7 col-md-9 col-sm-12">
+                                            {{--                                            <textarea name="en[privacy]" class="form-control" data-provide="markdown" rows="10">{{$settings->translate('en')->privacy}}</textarea>--}}
+                                            {{--                                            <span class="form-text text-muted">Enter some markdown content</span>--}}
+                                            <textarea class="ckeditor form-control" name="en[privacy_providers]">{{$settings->translate('en')->privacy_providers}}</textarea>
 
                                         </div>
                                     </div>
